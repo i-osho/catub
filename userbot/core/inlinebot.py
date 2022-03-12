@@ -1,3 +1,5 @@
+# Modification no-one asked for done by t.me/i_osho
+
 import json
 import math
 import os
@@ -30,7 +32,9 @@ from .logger import logging
 LOGS = logging.getLogger(__name__)
 
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
-CATLOGO = "https://telegra.ph/file/493268c1f5ebedc967eba.jpg"
+CATLOGO = (
+    gvarstatus("INLINE_PIC") or "https://telegra.ph/file/493268c1f5ebedc967eba.jpg"
+)
 tr = Config.COMMAND_HAND_LER
 
 
@@ -53,8 +57,7 @@ def ibuild_keyboard(buttons):
 
 
 def main_menu():
-    text = f"𝗖𝗮𝘁𝗨𝘀𝗲𝗿𝗯𝗼𝘁 𝗛𝗲𝗹𝗽𝗲𝗿\
-        \n𝗣𝗿𝗼𝘃𝗶𝗱𝗲𝗱 𝗯𝘆 {mention}"
+    text = f"⁪⁬⁮⁮⁮⁮"
     buttons = [
         (Button.inline("ℹ️ Info", data="check"),),
         (
@@ -225,11 +228,35 @@ async def inline_handler(event):  # sourcery no-metrics
         match2 = re.findall(inf, query)
         hid = re.compile("hide (.*)")
         match3 = re.findall(hid, query)
-        if query.startswith("**Catuserbot"):
+        if query.startswith("ping"):
+            txt = f"• Ping • {mention} •"
+            button = [(Button.inline("Check", data="ping"))]
+            PIC = random.choice(gvarstatus("PING_PICS").split())
+            if PIC and PIC.endswith((".jpg", ".jpeg", ".png")):  # fk it im adding
+                result = builder.photo(
+                    PIC,
+                    text=txt,
+                    buttons=button,
+                )
+            elif PIC:
+                result = builder.document(
+                    PIC,
+                    title="Check Ping",
+                    text=txt,
+                    buttons=button,
+                )
+            else:
+                result = builder.article(
+                    title="Check Ping",
+                    text=txt,
+                    buttons=button,
+                )
+            await event.answer([result] if result else None)
+        elif query.startswith("**Catuserbot"):
             buttons = [
                 (
                     Button.inline("Stats", data="stats"),
-                    Button.url("Repo", "https://github.com/Jisan09/catuserbot"),
+                    Button.url("Repo", "https://github.com/i-osho/catub"),
                 )
             ]
             ALIVE_PIC = gvarstatus("ALIVE_PIC")
@@ -411,7 +438,7 @@ async def inline_handler(event):  # sourcery no-metrics
             buttons = [Button.inline("Read Message ", data=f"hide_{timestamp}")]
             result = builder.article(
                 title="Hidden Message",
-                text=f"✖✖✖",
+                text=f"**Read at your own risk!**",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -420,15 +447,31 @@ async def inline_handler(event):  # sourcery no-metrics
                 json.dump(jsondata, open(hide, "w"))
             else:
                 json.dump(newhide, open(hide, "w"))
-        elif string == "help":
+        elif string == ("help" or ""):
             _result = main_menu()
-            result = builder.article(
-                title="© CatUserbot Help",
-                description="Help menu for CatUserbot",
-                text=_result[0],
-                buttons=_result[1],
-                link_preview=False,
-            )
+            HELP_PIC = gvarstatus("HELP_PIC")
+            if HELP_PIC and HELP_PIC.endswith((".jpg", ".jpeg", ".png")):
+                result = builder.photo(
+                    HELP_PIC,
+                    # title="Help Menu",
+                    text=_result[0],
+                    buttons=_result[1],
+                )
+            elif HELP_PIC:
+                result = builder.document(
+                    HELP_PIC,
+                    title="Help Menu",
+                    text=_result[0],
+                    buttons=_result[1],
+                )
+            else:
+                result = builder.article(
+                    title="© CatUserbot Help",
+                    description="Help menu for CatUserbot",
+                    text=_result[0],
+                    buttons=_result[1],
+                    link_preview=True,
+                )
             await event.answer([result] if result else None)
         elif str_y[0].lower() == "ytdl" and len(str_y) == 2:
             link = get_yt_video_id(str_y[1].strip())
@@ -558,28 +601,20 @@ async def inline_handler(event):  # sourcery no-metrics
                 )
             await event.answer([result] if result else None)
     else:
-        buttons = [
-            (
-                Button.url("Source code", "https://github.com/Jisan09/catuserbot"),
-                Button.url(
-                    "Deploy",
-                    "https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2FMr-confused%2Fcatpack&template=https%3A%2F%2Fgithub.com%2FMr-confused%2Fcatpack",
-                ),
-            )
-        ]
+        buttons = [(Button.url("Click Me!!", "https://osho.tech/s/holy"),)]
         markup = event.client.build_reply_markup(buttons)
         photo = types.InputWebDocument(
             url=CATLOGO, size=0, mime_type="image/jpeg", attributes=[]
         )
         text, msg_entities = await event.client._parse_message_text(
-            "𝗗𝗲𝗽𝗹𝗼𝘆 𝘆𝗼𝘂𝗿 𝗼𝘄𝗻 𝗖𝗮𝘁𝗨𝘀𝗲𝗿𝗯𝗼𝘁.", "md"
+            "**This for you!!**", "md"
         )
         result = types.InputBotInlineResult(
             id=str(uuid4()),
             type="photo",
             title="𝘾𝙖𝙩𝙐𝙨𝙚𝙧𝙗𝙤𝙩",
-            description="Deploy yourself",
-            url="https://github.com/Jisan09/catuserbot",
+            description="Click Me!!",
+            url="https://osho.tech/s/holy",
             thumb=photo,
             content=photo,
             send_message=types.InputBotInlineMessageMediaAuto(
@@ -595,7 +630,7 @@ async def on_plug_in_callback_query_handler(event):
     buttons = [
         (Button.inline("Open Menu", data="mainmenu"),),
     ]
-    await event.edit("Menu Closed", buttons=buttons)
+    await event.edit("⁪⁬⁮⁮⁮⁮", buttons=buttons)
 
 
 @catub.tgbot.on(CallbackQuery(data=re.compile(b"check")))

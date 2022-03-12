@@ -4,7 +4,6 @@ import io
 import os
 import pathlib
 import re
-from datetime import datetime
 from time import time
 
 from telethon.errors.rpcerrorlist import YouBlockedUserError
@@ -30,8 +29,7 @@ from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers import progress, reply_id
 from ..helpers.functions.utube import _mp3Dl, get_yt_video_id, get_ytthumb, ytsearch
-from ..helpers.utils import _format
-from . import hmention
+from ..helpers.utils import _format, reply_id
 
 BASE_YT_URL = "https://www.youtube.com/watch?v="
 LOGS = logging.getLogger(__name__)
@@ -337,35 +335,30 @@ async def yt_search(event):
 )
 async def kakashi(event):
     "For downloading instagram media"
-    chat = "@instasavegrambot"
+    chat = "@InstaDlXbot"
     link = event.pattern_match.group(1)
     if "www.instagram.com" not in link:
         await edit_or_reply(
             event, "` I need a Instagram link to download it's Video...`(*_*)"
         )
     else:
-        start = datetime.now()
         catevent = await edit_or_reply(event, "**Downloading.....**")
     async with event.client.conversation(chat) as conv:
         try:
             msg_start = await conv.send_message("/start")
             response = await conv.get_response()
             msg = await conv.send_message(link)
-            video = await conv.get_response()
             details = await conv.get_response()
+            video = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await catevent.edit("**Error:** `unblock` @instasavegrambot `and retry!`")
+            await catevent.edit("`unblock` @InstaDlXbot `and retry!`")
             return
         await catevent.delete()
         cat = await event.client.send_file(
             event.chat_id,
             video,
-        )
-        end = datetime.now()
-        ms = (end - start).seconds
-        await cat.edit(
-            f"<b><i>➥ Video uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+            caption="• <a href={link}>Post Link</a> •",
             parse_mode="html",
         )
     await event.client.delete_messages(

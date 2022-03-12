@@ -10,7 +10,7 @@ from ..helpers.tools import media_type
 from ..helpers.utils import _format
 from ..sql_helper import no_log_pms_sql
 from ..sql_helper.globals import addgvar, gvarstatus
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, OWNER_ID
 
 LOGS = logging.getLogger(__name__)
 
@@ -94,16 +94,37 @@ async def log_tagged_messages(event):
         )
     if messaget is not None:
         resalt += f"\n<b>Message type : </b><code>{messaget}</code>"
+        if messaget in ["Photo", "Gif", "Video", "Voice", "Audio", "Document"]:
+            if event.message.message:
+                resalt += f"\n<b>Caption : </b>{event.message.message}"
     else:
         resalt += f"\n<b>Message : </b>{event.message.message}"
-    resalt += f"\n<b>Message link: </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
+    x = await event.get_chat()
+    if x.has_link == True:
+        link = f"https://t.me/{x.username}/{event.message.id}"
+        public = True
+    else:
+        link = f"https://t.me/c/{x.id}/{event.message.id}"
+        public = False
+    resalt += f"\n<b>Message link: </b><a href = '{link}'> link</a>"
     if not event.is_private:
-        await event.client.send_message(
-            Config.PM_LOGGER_GROUP_ID,
-            resalt,
-            parse_mode="html",
-            link_preview=False,
-        )
+        if public:
+            logged__ = await tgbot.send_message(
+                Config.PM_LOGGER_GROUP_ID,
+                resalt,
+                parse_mode="html",
+                link_preview=True,
+            )
+        else:
+            logged__ = await tgbot.send_message(
+                Config.PM_LOGGER_GROUP_ID,
+                resalt,
+                parse_mode="html",
+                link_preview=False,
+            )
+    await event.client.send_read_acknowledge(
+        Config.PM_LOGGER_GROUP_ID, message=logged__, clear_mentions=True
+    )
 
 
 @catub.cat_cmd(
@@ -122,11 +143,11 @@ async def log(log_text):
     if BOTLOG:
         if log_text.reply_to_msg_id:
             reply_msg = await log_text.get_reply_message()
-            await reply_msg.forward_to(BOTLOG_CHATID)
+            await reply_msg.forward_to(OWNER_ID)
         elif log_text.pattern_match.group(1):
             user = f"#LOG / Chat ID: {log_text.chat_id}\n\n"
             textx = user + log_text.pattern_match.group(1)
-            await log_text.client.send_message(BOTLOG_CHATID, textx)
+            await log_text.client.send_message(OWNER_ID, textx)
         else:
             await log_text.edit("`What am I supposed to log?`")
             return

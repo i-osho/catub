@@ -577,13 +577,12 @@ async def aschedule_fetch(event):
 
 
 @catub.cat_cmd(
-    pattern="w(hat)?anime$",
-    command=("whatanime", plugin_category),
+    pattern="wa$",
+    command=("wa", plugin_category),
     info={
         "header": "Reverse search of anime.",
         "usage": [
-            "{tr}whatanime reply to photo/gif/video",
-            "{tr}wanime reply to photo/gif/video",
+            "{tr}wa reply to photo/gif/video",
         ],
     },
 )

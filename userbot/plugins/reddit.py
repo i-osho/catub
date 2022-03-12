@@ -22,12 +22,12 @@ plugin_category = "misc"
 
 
 @catub.cat_cmd(
-    pattern="reddit(?:\s|$)([\s\S]*)",
-    command=("reddit", plugin_category),
+    pattern="r(?:\s|$)([\s\S]*)",
+    command=("r", plugin_category),
     info={
         "header": "get a random reddit post.",
-        "usage": "{tr}reddit <subreddit>",
-        "examples": "{tr}reddit dankmemes",
+        "usage": "{tr}r <subreddit>",
+        "examples": "{tr}r dankmemes",
     },
 )
 async def reddit_fetch(event):

@@ -132,7 +132,7 @@ async def cmdlist():
     info={
         "header": "To get guide for catuserbot.",
         "description": "To get information or guide for the command or plugin",
-        "note": "if command name and plugin name is same then you get guide for plugin. So by using this flag you get command guide",
+        "note": "if command name and plugin name is same then you get guide for plugin. So by using this flag you get command guide\nAdd HELP_PIC in database for image in `{tr}help`",
         "flags": {
             "c": "To get info of command.",
             "p": "To get info of plugin.",

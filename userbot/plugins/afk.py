@@ -33,6 +33,35 @@ class AFK:
 
 AFK_ = AFK()
 
+bahane = [
+    "Sorry I left you in oven, gotta go.",
+    "brb in 2 minutes, if I don't come read this sentence again.",
+    "My fishes were drowning, went to save them.",
+    "Busy learning HTML to hack NASA.",
+    "1. I will be back later.\n2. Later = IDK",
+    "I went to the void.",
+    "Brb, not in the mood to be alive.",
+    "I am away from keyboard wait for me to come back maybe.",
+    "My cat jumped on the afk switch...........",
+    "Got a fire in the house, gotta go to control my magmar.",
+    "FBI raided my house, I'm on the run !!!",
+    "Busy proving the flat earth theory.",
+    "Went To Get Isekai-ed !!",
+    "Black hole appearing in the next billion years, need to pack my bags ASAP.",
+    "Breaking nokia 3310, pray I'll be back soon.",
+    "Busy searching mitsuha to my taki.",
+    "Busy summoning the Infinite Tsukuyomi.",
+    "Teaching itadori to eat fingers.",
+    "Just did my first domain expansion so kinda busy",
+    "Figuring out my quirk.",
+    "Ara ara sayonara...",
+    "I am gonna be the pirate king !!",
+    "Gummo gummo no bye bye...",
+    "Give up on your dreams and die.",
+    "Shinzou sasageyo!",
+    "Sayonara Darling ~ 02",
+]
+
 
 @catub.cat_cmd(outgoing=True, edited=False)
 async def set_not_afk(event):
@@ -63,7 +92,7 @@ async def set_not_afk(event):
     ):
         shite = await event.client.send_message(
             event.chat_id,
-            "`Back alive! No Longer afk.\nWas afk for " + endtime + "`",
+            f"**No Longer Afk**\n\nWas away for ~ `{endtime}`",
         )
         AFK_.USERAFK_ON = {}
         AFK_.afk_time = None
@@ -114,24 +143,22 @@ async def on_afk(event):  # sourcery no-metrics
         msg = None
         if AFK_.afk_type == "media":
             if AFK_.reason:
-                message_to_reply = (
-                    f"`I am AFK .\n\nAFK Since {endtime}\nReason : {AFK_.reason}`"
-                )
+                message_to_reply = f"**I'm currently AFK.**\n\nLast seen `{endtime}` ago.\n\n**Reason:** `{AFK_.reason}`"
             else:
-                message_to_reply = f"`I am AFK .\n\nAFK Since {endtime}\nReason : Not Mentioned ( ಠ ʖ̯ ಠ)`"
+                message_to_reply = (
+                    f"**I'm currently AFK.**\n\nLast seen `{endtime}` ago."
+                )
             if event.chat_id:
                 msg = await event.reply(message_to_reply, file=AFK_.media_afk.media)
         elif AFK_.afk_type == "text":
             if AFK_.msg_link and AFK_.reason:
-                message_to_reply = (
-                    f"**I am AFK .\n\nAFK Since {endtime}\nReason : **{AFK_.reason}"
-                )
+                message_to_reply = f"**I'm currently AFK.**\n\nLast seen `{endtime}` ago.\n\n**Reason:** `{AFK_.reason}`"
             elif AFK_.reason:
-                message_to_reply = (
-                    f"`I am AFK .\n\nAFK Since {endtime}\nReason : {AFK_.reason}`"
-                )
+                message_to_reply = f"**I'm currently AFK.**\n\nLast seen `{endtime}` ago.\n\n**Reason:** `{AFK_.reason}`"
             else:
-                message_to_reply = f"`I am AFK .\n\nAFK Since {endtime}\nReason : Not Mentioned ( ಠ ʖ̯ ಠ)`"
+                message_to_reply = (
+                    f"**I'm currently AFK.**\n\nLast seen `{endtime}` ago."
+                )
             if event.chat_id:
                 msg = await event.reply(message_to_reply)
         if event.chat_id in AFK_.last_afk_message:
@@ -150,12 +177,12 @@ async def on_afk(event):  # sourcery no-metrics
         messaget = media_type(event)
         resalt = f"#AFK_TAGS \n<b>Group : </b><code>{hmm.title}</code>"
         if full is not None:
-            resalt += f"\n<b>From : </b> 👤{_format.htmlmentionuser(full.first_name , full.id)}"
+            resalt += f"\n<b>{_format.htmlmentionuser(full.first_name , full.id)}</b>"
         if messaget is not None:
-            resalt += f"\n<b>Message type : </b><code>{messaget}</code>"
+            resalt += f"<code>{messaget}</code>"
         else:
-            resalt += f"\n<b>Message : </b>{event.message.message}"
-        resalt += f"\n<b>Message link: </b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'> link</a>"
+            resalt += f"{event.message.message}"
+        resalt += f"\n<b><a href = 'https://t.me/c/{hmm.id}/{event.message.id}'>Message Link</a></b>"
         if not event.is_private:
             await event.client.send_message(
                 Config.PM_LOGGER_GROUP_ID,
@@ -263,7 +290,13 @@ async def _(event):
     AFK_.afk_star = start_1.replace(microsecond=0)
     if not AFK_.USERAFK_ON:
         input_str = event.pattern_match.group(1)
-        AFK_.reason = input_str
+        if ";" in input_str:
+            msg, mlink = input_str.split(";", 1)
+            AFK_.reason = f"[{msg.strip()}]({mlink.strip()})"
+            AFK_.msg_link = True
+        else:
+            AFK_.reason = input_str
+            AFK_.msg_link = False
         last_seen_status = await event.client(
             functions.account.GetPrivacyRequest(types.InputPrivacyKeyStatusTimestamp())
         )

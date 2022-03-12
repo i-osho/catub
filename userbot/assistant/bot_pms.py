@@ -86,6 +86,7 @@ async def bot_start(event):
     my_last = user.last_name
     my_fullname = f"{my_first} {my_last}" if my_last else my_first
     my_username = f"@{user.username}" if user.username else my_mention
+    START_PIC = gvarstatus("START_PIC")
     if chat.id != Config.OWNER_ID:
         customstrmsg = gvarstatus("START_TEXT") or None
         if customstrmsg is not None:
@@ -105,29 +106,31 @@ async def bot_start(event):
         else:
             start_msg = f"Hey! 👤{mention},\
                         \nI am {my_mention}'s assistant bot.\
-                        \nYou can contact to my master from here.\
-                        \n\nPowered by [Catuserbot](https://t.me/catuserbot)"
-        buttons = [
-            (
-                Button.url("Repo", "https://github.com/TgCatUB/catuserbot"),
-                Button.url(
-                    "Deploy",
-                    "https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2FMr-confused%2Fcatpack&template=https%3A%2F%2Fgithub.com%2FMr-confused%2Fcatpack",
-                ),
-            )
-        ]
+                        \nYou can contact to my master from here."
+        buttons = None
     else:
         start_msg = "Hey Master!\
             \nHow can i help you ?"
         buttons = None
     try:
-        await event.client.send_message(
-            chat.id,
-            start_msg,
-            link_preview=False,
-            buttons=buttons,
-            reply_to=reply_to,
-        )
+        if START_PIC:
+            await event.client.send_file(
+                chat.id,
+                file=START_PIC,
+                caption=start_msg,
+                link_preview=False,
+                buttons=buttons,
+                reply_to=reply_to,
+                allow_cache=True,
+            )
+        else:
+            await event.client.send_message(
+                chat.id,
+                start_msg,
+                link_preview=False,
+                buttons=buttons,
+                reply_to=reply_to,
+            )
     except Exception as e:
         if BOTLOG:
             await event.client.send_message(

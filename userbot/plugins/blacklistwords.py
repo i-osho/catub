@@ -6,7 +6,6 @@ from userbot import catub
 
 from ..core.managers import edit_or_reply
 from ..sql_helper import blacklist_sql as sql
-from ..utils import is_admin
 
 plugin_category = "admin"
 
@@ -15,9 +14,9 @@ plugin_category = "admin"
 async def on_new_message(event):
     name = event.raw_text
     snips = sql.get_chat_blacklist(event.chat_id)
-    catadmin = await is_admin(event.client, event.chat_id, event.client.uid)
-    if not catadmin:
-        return
+    # catadmin = await is_admin(event.client, event.chat_id, event.client.uid)
+    # if not catadmin:
+    #    return
     for snip in snips:
         pattern = r"( |^|[^\w])" + re.escape(snip) + r"( |$|[^\w])"
         if re.search(pattern, name, flags=re.IGNORECASE):
@@ -45,8 +44,8 @@ async def on_new_message(event):
         "usage": "{tr}addblacklist <word(s)>",
         "examples": ["{tr}addblacklist fuck", "{tr}addblacklist fuck\nsex"],
     },
-    groups_only=True,
-    require_admin=True,
+    # groups_only=True,
+    # require_admin=True,
 )
 async def _(event):
     "To add blacklist words to database"
@@ -76,8 +75,8 @@ async def _(event):
         "usage": "{tr}rmblacklist <word(s)>",
         "examples": ["{tr}rmblacklist fuck", "{tr}rmblacklist fuck\nsex"],
     },
-    groups_only=True,
-    require_admin=True,
+    # groups_only=True,
+    # require_admin=True,
 )
 async def _(event):
     "To Remove Blacklist Words from Database."
@@ -102,8 +101,8 @@ async def _(event):
         "description": "Shows you the list of blacklist words in that specific chat",
         "usage": "{tr}listblacklist",
     },
-    groups_only=True,
-    require_admin=True,
+    # groups_only=True,
+    # require_admin=True,
 )
 async def _(event):
     "To show the blacklist words in that specific chat"

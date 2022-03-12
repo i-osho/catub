@@ -1,4 +1,4 @@
-# created by @Jisan7509
+# created by @jisan7509
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
@@ -6,9 +6,9 @@ from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 @bot.on(admin_cmd(outgoing=True, pattern="note_help$"))
 @bot.on(sudo_cmd(outgoing=True, pattern="note_help$", allow_sudo=True))
-async def kakashi(jisan):
+async def kakashi(Jimsan):
     await edit_or_reply(
-        jisan, "All commands for note is [HERE](https://nekobin.com/pizacisawi) "
+        Jimsan, "All commands for note is [HERE](https://nekobin.com/pizacisawi) "
     )
 
 @bot.on(admin_cmd(pattern="note(?:\s|$)([\s\S]*)", outgoing=True))

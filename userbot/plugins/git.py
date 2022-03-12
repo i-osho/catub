@@ -1,4 +1,5 @@
 import os
+import urllib.request
 from datetime import datetime
 
 import aiohttp
@@ -21,6 +22,20 @@ plugin_category = "misc"
 GIT_TEMP_DIR = "./temp/"
 
 
+def commit_name():  # scrapper by pero t.me/Senpai_Loves_Oppai
+    "To get random commit names"
+    done = False
+    while done == False:
+        site = urllib.request.urlopen("http://whatthecommit.com/").read()
+        content = str(site)
+        start = content.find('<div id="content">') + 23
+        end = content.find('\\n</p>\\n<p class="permalink">')
+        message = content[start:end]
+        if len(message) != 0:
+            done = True
+        return message
+
+
 @catub.cat_cmd(
     pattern="repo$",
     command=("repo", plugin_category),
@@ -35,8 +50,8 @@ async def source(e):
     "Source code link of userbot"
     await edit_or_reply(
         e,
-        "Click [here](https://github.com/Jisan09/catuserbot) to open this bot source code\
-        \nClick [here](https://github.com/TgCatUB/nekopack) to open supported link for heroku",
+        "Click [here](https://github.com/i-osho/catub) to open this bot source code\
+        \nClick [here](https://github.com/i-osho/catpack) to open supported link for heroku",
     )
 
 
@@ -156,6 +171,7 @@ async def git_commit(file_name, mone):
     g = Github(access_token)
     file = open(file_name, "r", encoding="utf-8")
     commit_data = file.read()
+    commit_msg = commit_name()
     repo = g.get_repo(Config.GIT_REPO_NAME)
     LOGS.info(repo.name)
     create_file = True
@@ -171,9 +187,7 @@ async def git_commit(file_name, mone):
         file_name = f"userbot/plugins/{file_name}"
         LOGS.info(file_name)
         try:
-            repo.create_file(
-                file_name, "Uploaded New Plugin", commit_data, branch="master"
-            )
+            repo.create_file(file_name, commit_msg, commit_data, branch="master")
             LOGS.info("Committed File")
             ccess = Config.GIT_REPO_NAME
             ccess = ccess.strip()

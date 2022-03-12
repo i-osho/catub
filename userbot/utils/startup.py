@@ -4,7 +4,7 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
-from telethon import Button, functions, types, utils
+from telethon import functions, types, utils
 
 from userbot import BOTLOG, BOTLOG_CHATID, PM_LOGGER_GROUP_ID
 
@@ -20,6 +20,9 @@ from ..sql_helper.globals import addgvar, gvarstatus
 from .pluginmanager import load_module
 from .tools import create_supergroup
 
+STARTUP_PIC = (
+    os.environ.get("STARTUP_PIC") or "https://telegra.ph/file/4e3ba8e8f7e535d5a2abe.jpg"
+)
 LOGS = logging.getLogger("CatUserbot")
 cmdhr = Config.COMMAND_HAND_LER
 
@@ -61,9 +64,8 @@ async def startupmessage():
         if BOTLOG:
             Config.CATUBLOGO = await catub.tgbot.send_file(
                 BOTLOG_CHATID,
-                "https://telegra.ph/file/4e3ba8e8f7e535d5a2abe.jpg",
+                STARTUP_PIC,
                 caption="**Your CatUserbot has been started successfully.**",
-                buttons=[(Button.url("Support", "https://t.me/catuserbot"),)],
             )
     except Exception as e:
         LOGS.error(e)

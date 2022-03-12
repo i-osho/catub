@@ -47,8 +47,10 @@ async def _(event):
                     peer=created_chat_id,
                 )
             )
+            limk = result.link
+            limk = limk.replace("https://", "")
             await edit_or_reply(
-                event, f"Group `{group_name}` created successfully. Join {result.link}"
+                event, f"Group [{group_name}]({limk}) created successfully."
             )
         except Exception as e:
             await edit_delete(event, f"**Error:**\n{str(e)}")
@@ -67,9 +69,11 @@ async def _(event):
                     peer=created_chat_id,
                 )
             )
+            limk = result.link
+            limk = limk.replace("https://", "")
             await edit_or_reply(
                 event,
-                f"Channel `{group_name}` created successfully. Join {result.link}",
+                f"Channel [{group_name}]({limk}) created successfully.",
             )
         except Exception as e:
             await edit_delete(event, f"**Error:**\n{e}")
@@ -78,9 +82,11 @@ async def _(event):
             group_name, event.client, Config.TG_BOT_USERNAME, descript
         )
         if answer[0] != "error":
+            limk = answer[0].link
+            limk = limk.replace("https://", "")
             await edit_or_reply(
                 event,
-                f"Mega group `{group_name}` created successfully. Join {answer[0].link}",
+                f"Mega group [{group_name}]({limk}) created successfully.",
             )
         else:
             await edit_delete(event, f"**Error:**\n{answer[1]}")

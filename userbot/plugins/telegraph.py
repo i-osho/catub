@@ -12,7 +12,7 @@ from userbot import catub
 
 from ..Config import Config
 from ..core.logger import logging
-from ..core.managers import edit_or_reply
+from ..core.managers import edit_delete, edit_or_reply
 from . import BOTLOG, BOTLOG_CHATID, mention
 
 LOGS = logging.getLogger(__name__)
@@ -50,6 +50,7 @@ def resize_image(image):
 )  # sourcery no-metrics
 async def _(event):
     "To get telegraph link."
+    reply = await event.get_reply_message()
     catevent = await edit_or_reply(event, "`processing........`")
     if BOTLOG:
         await event.client.send_message(
@@ -66,9 +67,14 @@ async def _(event):
     r_message = await event.get_reply_message()
     input_str = (event.pattern_match.group(4)).strip()
     if input_str in ["media", "m"]:
-        downloaded_file_name = await event.client.download_media(
-            r_message, Config.TEMP_DIR
-        )
+        size = reply.file.size / 1024
+        if size >= 5000:
+            await edit_delete(event, "`Error : Replied media is bigger than 5mb`")
+            return
+        else:
+            downloaded_file_name = await event.client.download_media(
+                r_message, Config.TEMP_DIR
+            )
         await catevent.edit(f"`Downloaded to {downloaded_file_name}`")
         if downloaded_file_name.endswith((".webp")):
             resize_image(downloaded_file_name)

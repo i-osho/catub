@@ -24,7 +24,7 @@ USERID = catub.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 ALIVE_NAME = Config.ALIVE_NAME
 AUTONAME = Config.AUTONAME
 DEFAULT_BIO = Config.DEFAULT_BIO
-
+OWNER_ID = Config.OWNER_ID
 
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
 heroku_api = "https://api.heroku.com"

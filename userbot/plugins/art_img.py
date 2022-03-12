@@ -1,5 +1,5 @@
 """
-Created by @Jisan7509
+Created by @jisan7509
 plugin for Cat_Userbot
 ☝☝☝
 You remove this, you gay.
@@ -34,9 +34,9 @@ async def bad(event):
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    output_file = os.path.join("./temp", "jisan.jpg")
+    output_file = os.path.join("./temp", "Jimsan.jpg")
     output = await _cattools.media_to_pic(event, reply_message)
-    outputt = convert_toimage(output[1], filename="./temp/jisan.jpg")
+    outputt = convert_toimage(output[1], filename="./temp/Jimsan.jpg")
     kakashi = await edit_or_reply(event, "```Wait making ASCII...```")
     async with event.client.conversation("@asciiart_bot") as conv:
         try:
@@ -84,9 +84,9 @@ async def pussy(event):
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    output_file = os.path.join("./temp", "jisan.jpg")
+    output_file = os.path.join("./temp", "Jimsan.jpg")
     output = await _cattools.media_to_pic(event, reply_message)
-    outputt = convert_toimage(output[1], filename="./temp/jisan.jpg")
+    outputt = convert_toimage(output[1], filename="./temp/Jimsan.jpg")
     kakashi = await edit_or_reply(event, "```Processing....```")
     async with event.client.conversation("@Lines50Bot") as conv:
         try:
@@ -127,9 +127,9 @@ async def cat(event):
     c_id = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    output_file = os.path.join("./temp", "jisan.jpg")
+    output_file = os.path.join("./temp", "Jimsan.jpg")
     output = await _cattools.media_to_pic(event, reply_message)
-    outputt = convert_toimage(output[1], filename="./temp/jisan.jpg")
+    outputt = convert_toimage(output[1], filename="./temp/Jimsan.jpg")
     await cat.delete()
     await clippy(event.client, output_file, event.chat_id, c_id)
     if os.path.exists(output_file):

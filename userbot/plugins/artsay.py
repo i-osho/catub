@@ -1,5 +1,5 @@
 """
-Created by  Md Jisan.  tg @Jisan7509
+Created by  Md Jimsan.  tg @jisan7509
 Plugin for CatUserbot
 """
 

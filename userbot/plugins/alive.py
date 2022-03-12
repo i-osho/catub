@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 from platform import python_version
 
+import requests
 from telethon import version
 from telethon.errors.rpcerrorlist import (
     MediaEmptyError,
@@ -22,6 +23,7 @@ from ..sql_helper.globals import gvarstatus
 from . import mention
 
 plugin_category = "utils"
+sucks = "The stars sure are beautiful tonight | Am I frightening... woman? "  # dis is str for a reason
 
 
 @catub.cat_cmd(
@@ -44,8 +46,20 @@ async def amireallyalive(event):
     end = datetime.now()
     ms = (end - start).microseconds / 1000
     _, check_sgnirts = check_data_base_heal_th()
-    EMOJI = gvarstatus("ALIVE_EMOJI") or "✧✧"
-    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "**✮ MY BOT IS RUNNING SUCCESSFULLY ✮**"
+    EMOJI = gvarstatus("ALIVE_EMOJI") or "〣"
+    # ================================================
+    api_url = f"https://animechan.vercel.app/api/random"
+    try:
+        response = requests.get(api_url).json()
+    except Exception:
+        response = None
+    quote = response["quote"]
+    while (len(quote) > 150) and (quote not in sucks):
+        res = requests.get(api_url).json()
+        quote = res["quote"]
+    ANIME_QUOTE = f"__{quote}__"
+    # ================================================
+    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or ANIME_QUOTE
     CAT_IMG = gvarstatus("ALIVE_PIC")
     cat_caption = gvarstatus("ALIVE_TEMPLATE") or temp
     caption = cat_caption.format(

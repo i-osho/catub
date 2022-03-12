@@ -99,6 +99,16 @@ async def send(event):
     thumb = thumb_image_path if os.path.exists(thumb_image_path) else None
     input_str = event.pattern_match.group(1)
     the_plugin_file = f"./userbot/plugins/{input_str}.py"
+    repo_link = os.environ.get("UPSTREAM_REPO")
+    if repo_link == "goodcat":
+        repo_link = "https://github.com/sandy1709/catuserbot"
+    if repo_link == "badcat":
+        repo_link = "https://github.com/i-osho/catub"
+    repo_branch = os.environ.get("UPSTREAM_REPO_BRANCH") or "master"
+    git_link = f"<a href= {repo_link}/blob/{repo_branch}/userbot/plugins/{input_str}.py>GitHub</a>"
+    raw_link = (
+        f"<a href= {repo_link}/raw/{repo_branch}/userbot/plugins/{input_str}.py>Raw</a>"
+    )
     if os.path.exists(the_plugin_file):
         start = datetime.now()
         caat = await event.client.send_file(
@@ -110,10 +120,10 @@ async def send(event):
             thumb=thumb,
         )
         end = datetime.now()
-        ms = (end - start).seconds
+        (end - start).seconds
         await event.delete()
         await caat.edit(
-            f"<b><i>➥ Plugin Name :- {input_str} .</i></b>\n<b><i>➥ Uploaded in {ms} seconds.</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
+            f"<b>〣File • {input_str}</b>\n<b>〣Link • {git_link} | {raw_link}</b>\n<b>〣By • {hmention}</b>",
             parse_mode="html",
         )
     else:

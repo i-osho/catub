@@ -1,5 +1,5 @@
 """
-Created by @Jisan7509
+Created by @jisan7509
 Plugin for CatUserbot
 #credit @GulfysHalfyyyy
 """

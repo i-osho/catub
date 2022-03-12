@@ -7,7 +7,7 @@ Fetch App Details from Playstore.
 import bs4
 import requests
 
-from . import ALIVE_NAME, catub, edit_or_reply
+from . import catub, edit_or_reply
 
 plugin_category = "utils"
 
@@ -82,7 +82,6 @@ async def app_search(event):
             + app_link
             + "'>View in Play Store</a>"
         )
-        app_details += f"\n\n===> {ALIVE_NAME} <==="
         await event.edit(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
         await event.edit("No result found in search. Please enter **Valid app name**")

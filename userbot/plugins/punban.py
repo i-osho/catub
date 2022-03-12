@@ -1,4 +1,4 @@
-# Created by @Jisan7509
+# Created by @jisan7509
 # All rights reserved.
 
 import asyncio
