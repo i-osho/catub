@@ -47,13 +47,13 @@ async def install(event):
                     10,
                 )
             else:
+                path1 = Path(downloaded_file_name)
+                shortname = path1.stem
                 try:
                     remove_plugin(shortname)
                     await edit_or_reply(event, f"Uninstalled {shortname}")
                 except Exception as e:
                     await edit_or_reply(event, f"Uninstalled {shortname}\n{e}")
-                path1 = Path(downloaded_file_name)
-                shortname = path1.stem
                 load_module(shortname.replace(".py", ""))
                 await edit_delete(
                     event,
