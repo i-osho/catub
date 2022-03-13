@@ -18,7 +18,8 @@ from . import (
 plugin_category = "tools"
 
 DELETE_TIMEOUT = 5
-thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
+thumb_image_path = os.path.join(
+    Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
 
 
 @catub.cat_cmd(
@@ -48,40 +49,22 @@ async def install(event):
                     10,
                 )
             else:
-                os.remove(downloaded_file_name)
+                try:
+                    remove_plugin(shortname)
+                    await edit_or_reply(event, f"Uninstalled {shortname}")
+                except Exception as e:
+                    await edit_or_reply(event, f"Uninstalled {shortname}\n{e}")
+                path1 = Path(downloaded_file_name)
+                shortname = path1.stem
+                load_module(shortname.replace(".py", ""))
                 await edit_delete(
-                    event, "Errors! This plugin is already installed/pre-installed.", 10
+                    event,
+                    f"Installed Plugin `{os.path.basename(downloaded_file_name)}`",
+                    10,
                 )
         except Exception as e:
             await edit_delete(event, f"**Error:**\n`{e}`", 10)
             os.remove(downloaded_file_name)
-
-
-@catub.cat_cmd(
-    pattern="load ([\s\S]*)",
-    command=("load", plugin_category),
-    info={
-        "header": "To load a plugin again. if you have unloaded it",
-        "description": "To load a plugin again which you unloaded by {tr}unload",
-        "usage": "{tr}load <plugin name>",
-        "examples": "{tr}load markdown",
-    },
-)
-async def load(event):
-    "To load a plugin again. if you have unloaded it"
-    shortname = event.pattern_match.group(1)
-    try:
-        try:
-            remove_plugin(shortname)
-        except BaseException:
-            pass
-        load_module(shortname)
-        await edit_delete(event, f"`Successfully loaded {shortname}`", 10)
-    except Exception as e:
-        await edit_or_reply(
-            event,
-            f"Could not load {shortname} because of the following error.\n{e}",
-        )
 
 
 @catub.cat_cmd(
@@ -128,26 +111,6 @@ async def send(event):
         )
     else:
         await edit_or_reply(event, "404: File Not Found")
-
-
-@catub.cat_cmd(
-    pattern="unload ([\s\S]*)",
-    command=("unload", plugin_category),
-    info={
-        "header": "To unload a plugin temporarily.",
-        "description": "You can load this unloaded plugin by restarting or using {tr}load cmd. Useful for cases like seting notes in rose bot({tr}unload markdown).",
-        "usage": "{tr}unload <plugin name>",
-        "examples": "{tr}unload markdown",
-    },
-)
-async def unload(event):
-    "To unload a plugin temporarily."
-    shortname = event.pattern_match.group(1)
-    try:
-        remove_plugin(shortname)
-        await edit_or_reply(event, f"Unloaded {shortname} successfully")
-    except Exception as e:
-        await edit_or_reply(event, f"Successfully unload {shortname}\n{e}")
 
 
 @catub.cat_cmd(
