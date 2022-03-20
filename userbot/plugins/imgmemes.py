@@ -1,5 +1,5 @@
 #  Copyright (C) 2020  sandeep.n(π.$)
-# credits to @mrconfused (@sandy1709)
+# credits to @assconfused (@Mrsasshole)
 import asyncio
 import os
 import re

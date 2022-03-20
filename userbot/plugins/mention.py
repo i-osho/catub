@@ -61,7 +61,7 @@ async def _(event):
             "{tr}men username/userid text",
             "text (username/mention)[custom text] text",
         ],
-        "examples": ["{tr}men @mrconfused hi", "Hi @mrconfused[How are you?]"],
+        "examples": ["{tr}men @assconfused hi", "Hi @assconfused[How are you?]"],
     },
 )
 async def _(event):

@@ -1,5 +1,5 @@
 # Copyright (C) 2020 BY - GitHub.com/code-rgb [TG - @deleteduser420]
-# ported to cat by @mrconfused (@sandy1709)
+# ported to cat by @assconfused (@Mrsasshole)
 
 import os
 

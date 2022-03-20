@@ -1,4 +1,4 @@
-# credits to @mrconfused and @sandy1709
+# credits to @assconfused and @Mrsasshole
 
 import os
 

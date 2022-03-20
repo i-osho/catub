@@ -1,4 +1,4 @@
-# Made by @mrconfused and @sandy1709
+# Made by @assconfused and @Mrsasshole
 # memify plugin for catuserbot
 import asyncio
 import base64

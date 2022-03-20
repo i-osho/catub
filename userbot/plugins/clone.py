@@ -1,4 +1,4 @@
-# Credits of Plugin @ViperAdnan and @mrconfused(revert)[will add sql soon]
+# Credits of Plugin @ViperAdnan and @assconfused(revert)[will add sql soon]
 import html
 
 from telethon.tl import functions

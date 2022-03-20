@@ -1,4 +1,4 @@
-# file summary plugin for catuserbot  by @mrconfused
+# file summary plugin for catuserbot  by @assconfused
 import time
 
 from prettytable import PrettyTable

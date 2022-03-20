@@ -1,4 +1,4 @@
-# Urban Dictionary for catuserbot by @mrconfused
+# Urban Dictionary for catuserbot by @assconfused
 from PyDictionary import PyDictionary
 
 from userbot import catub

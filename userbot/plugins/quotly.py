@@ -1,6 +1,6 @@
 """
 imported from nicegrill
-modified by @mrconfused
+modified by @assconfused
 QuotLy: Avaible commands: .qbot
 """
 

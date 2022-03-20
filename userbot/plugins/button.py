@@ -1,7 +1,7 @@
 #    Copyright (C) 2020  sandeep.n(π.$)
 # button post makker for catuserbot thanks to uniborg for the base
 
-# by @sandy1709 (@mrconfused)
+# by @Mrsasshole (@assconfused)
 import os
 import re
 

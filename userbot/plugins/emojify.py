@@ -1,6 +1,6 @@
 """
 Created by @jisan7509
-modified by  @mrconfused
+modified by  @assconfused
 Userbot plugin for CatUserbot
 """
 from userbot import catub

@@ -1,5 +1,5 @@
 #    Copyright (C) 2020  sandeep.n(π.$)
-# baning spmmers plugin for catuserbot by @sandy1709
+# baning spmmers plugin for catuserbot by @Mrsasshole
 # included both cas(combot antispam service) and spamwatch (need to add more feaututres)
 
 from requests import get

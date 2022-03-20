@@ -1,4 +1,4 @@
-# by @mrconfused (@sandy1709)
+# by @assconfused (@Mrsasshole)
 import asyncio
 import base64
 import io

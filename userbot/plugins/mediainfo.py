@@ -1,5 +1,5 @@
 # plugin by @deleteduser420
-# ported to telethon by @mrconfused (@sandy1709)
+# ported to telethon by @assconfused (@Mrsasshole)
 import os
 
 from userbot import catub
