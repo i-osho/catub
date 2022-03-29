@@ -21,7 +21,6 @@ from telethon.errors import (
 )
 
 from ..Config import Config
-from ..helpers.utils.events import checking
 from ..helpers.utils.format import paste_message
 from ..helpers.utils.utils import runcmd
 from ..sql_helper.globals import gvarstatus
@@ -333,7 +332,6 @@ CatUserBotClient.fast_download_file = download_file
 CatUserBotClient.fast_upload_file = upload_file
 CatUserBotClient.reload = restart_script
 CatUserBotClient.get_msg_link = get_message_link
-CatUserBotClient.check_testcases = checking
 try:
     send_message_check = TelegramClient.send_message
 except AttributeError:
