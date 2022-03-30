@@ -358,7 +358,7 @@ async def kakashi(event):
         cat = await event.client.send_file(
             event.chat_id,
             video,
-            caption="• <a href={link}>Post Link</a> •",
+            caption=f"• <a href={link}>Post Link</a> •",
             parse_mode="html",
         )
     await event.client.delete_messages(
