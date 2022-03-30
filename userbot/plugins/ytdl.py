@@ -335,7 +335,7 @@ async def yt_search(event):
 )
 async def kakashi(event):
     "For downloading instagram media"
-    chat = "@InstaDlXbot"
+    chat = "@FullSavebot"
     link = event.pattern_match.group(1)
     if "www.instagram.com" not in link:
         await edit_or_reply(
@@ -352,7 +352,7 @@ async def kakashi(event):
             video = await conv.get_response()
             await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await catevent.edit("`unblock` @InstaDlXbot `and retry!`")
+            await catevent.edit("`unblock` @FullSavebot `and retry!`")
             return
         await catevent.delete()
         cat = await event.client.send_file(
