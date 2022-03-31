@@ -79,7 +79,6 @@ async def startupmessage():
         return None
     try:
         if msg_details:
-            await catub.check_testcases()
             message = await catub.get_messages(msg_details[0], ids=msg_details[1])
             text = message.text + "\n\n**Ok Bot is Back and Alive.**"
             await catub.edit_message(msg_details[0], msg_details[1], text)
