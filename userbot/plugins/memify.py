@@ -8,7 +8,6 @@ import random
 import string
 
 from PIL import Image, ImageFilter
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from userbot import catub
 
@@ -156,7 +155,6 @@ async def memes(event):
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
     catid = await reply_id(event)
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not catinput:
         return await edit_delete(
             event, "`what should i write on that u idiot give text to memify`"
@@ -173,11 +171,6 @@ async def memes(event):
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
         )
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     meme_file = convert_toimage(output[1])
     meme = os.path.join("./temp", "catmeme.jpg")
     if gvarstatus("CNG_FONTS") is None:
@@ -242,7 +235,6 @@ async def memes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -255,11 +247,6 @@ async def memes(event):
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     outputfile = (
         os.path.join("./temp", "ascii_file.webp")
         if Jimsanidea
@@ -292,7 +279,6 @@ async def memes(event):
     if not (reply and (reply.media)):
         await edit_or_reply(event, "`Reply to supported Media...`")
         return
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp/"):
         os.mkdir("./temp/")
@@ -305,11 +291,6 @@ async def memes(event):
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     outputfile = (
         os.path.join("./temp", "invert.webp")
         if Jimsanidea
@@ -338,7 +319,6 @@ async def memes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -351,11 +331,6 @@ async def memes(event):
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     outputfile = (
         os.path.join("./temp", "solarize.webp")
         if Jimsanidea
@@ -384,7 +359,6 @@ async def memes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -397,11 +371,6 @@ async def memes(event):
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     outputfile = (
         os.path.join("./temp", "mirror_file.webp")
         if Jimsanidea
@@ -430,7 +399,6 @@ async def memes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -443,11 +411,6 @@ async def memes(event):
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     outputfile = (
         os.path.join("./temp", "flip_image.webp")
         if Jimsanidea
@@ -476,7 +439,6 @@ async def memes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -489,11 +451,6 @@ async def memes(event):
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     outputfile = (
         os.path.join("./temp", "grayscale.webp")
         if Jimsanidea
@@ -524,7 +481,6 @@ async def memes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -537,11 +493,6 @@ async def memes(event):
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     outputfile = (
         os.path.join("./temp", "zoomimage.webp")
         if Jimsanidea
@@ -589,7 +540,6 @@ async def memes(event):
     reply = await event.get_reply_message()
     if not reply:
         return await edit_delete(event, "`Reply to supported Media...`")
-    san = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
@@ -602,11 +552,6 @@ async def memes(event):
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
         Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
     outputfile = (
         os.path.join("./temp", "framed.webp")
         if Jimsanidea

