@@ -189,8 +189,7 @@ async def spotify_setup(event):
             "Go to the following link in "
             f"your browser: {authurl.format(SPOTIFY_CLIENT_ID)} and reply this msg with the Page Url you got after giving authencation."
         )
-        res = conv.wait_event(events.NewMessage(
-            outgoing=True, chats=BOTLOG_CHATID))
+        res = conv.wait_event(events.NewMessage(outgoing=True, chats=BOTLOG_CHATID))
         res = await res
         await msg.edit("`Processing ...`")
         initial_token = res.text.strip()
@@ -269,8 +268,7 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
                 received = r.json()
                 if received["currently_playing_type"] == "track":
                     to_insert["title"] = received["item"]["name"]
-                    to_insert["progress"] = ms_converter(
-                        received["progress_ms"])
+                    to_insert["progress"] = ms_converter(received["progress_ms"])
                     to_insert["interpret"] = received["item"]["artists"][0]["name"]
                     to_insert["duration"] = ms_converter(
                         received["item"]["duration_ms"]
@@ -320,8 +318,7 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
                     "grant_type": "refresh_token",
                     "refresh_token": SP_DATABASE.return_refresh(),
                 }
-                r = requests.post(
-                    "https://accounts.spotify.com/api/token", data=data)
+                r = requests.post("https://accounts.spotify.com/api/token", data=data)
                 received = r.json()
                 # if a new refresh is token as well, we save it here
                 try:
@@ -378,8 +375,7 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
                     + "\n\nText: "
                     + r.text,
                 )
-                LOGS.error(
-                    f"Spotify, error {str(r.status_code)}, text: {r.text}")
+                LOGS.error(f"Spotify, error {str(r.status_code)}, text: {r.text}")
                 # stop the whole program since I dont know what happens here
                 # and this is the safest thing we can do
                 SP_DATABASE.SPOTIFY_MODE = False
@@ -668,8 +664,7 @@ async def make_thumb(url, client, song, artist, now, full):
     if len(song) > 18:
         song = f"{song[:18]}..."
     text_draw(mfont, 30, thumbmask, "NOW PLAYING", 745)
-    text_draw(bfont, 80, thumbmask, song, 772,
-              stroke_width=1, stroke_fill="white")
+    text_draw(bfont, 80, thumbmask, song, 772, stroke_width=1, stroke_fill="white")
     text_draw(
         bfont, 38, thumbmask, f"by {artist}", 870, stroke_width=1, stroke_fill="white"
     )
@@ -821,8 +816,7 @@ async def spotify_now(event):
         if not idrgx:
             return await edit_delete(catevent, "\n**Error!! Invalid spotify url ;)**")
         song_id = idrgx.group(1)
-        received = sp_data(
-            f"https://api.spotify.com/v1/tracks/{song_id}").json()
+        received = sp_data(f"https://api.spotify.com/v1/tracks/{song_id}").json()
         title = received["album"]["name"]
         artist = received["album"]["artists"][0]["name"]
         thumb = received["album"]["images"][1]["url"]
