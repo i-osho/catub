@@ -44,7 +44,7 @@ vlist = [
     "PM_BLOCK",
     "MAX_FLOOD_IN_PMS",
     "S_ID",
-    "S_S"
+    "S_S",
     "START_TEXT",
     "START_PIC",
     "NO_OF_ROWS_IN_HELP",
