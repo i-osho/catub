@@ -223,3 +223,32 @@ async def verifyLoggerGroup():
         args = [executable, "-m", "userbot"]
         os.execle(executable, *args, os.environ)
         sys.exit(0)
+
+
+async def install_externalrepo(repo, branch, cfolder):
+    CATREPO = repo
+    if CATBRANCH := branch:
+        repourl = os.path.join(CATREPO, f"tree/{CATBRANCH}")
+        gcmd = f"git clone -b {CATBRANCH} {CATREPO} {cfolder}"
+        errtext = f"There is no branch with name `{CATBRANCH}` in your external repo {CATREPO}. Recheck branch name and correct it in vars(`EXTERNAL_REPO_BRANCH`)"
+    else:
+        repourl = CATREPO
+        gcmd = f"git clone {CATREPO} {cfolder}"
+        errtext = f"The link({CATREPO}) you provided for `EXTERNAL_REPO` in vars is invalid. please recheck that link"
+    response = urllib.request.urlopen(repourl)
+    if response.code != 200:
+        LOGS.error(errtext)
+        return await catub.tgbot.send_message(BOTLOG_CHATID, errtext)
+    await runcmd(gcmd)
+    if not os.path.exists(cfolder):
+        LOGS.error(
+            "There was a problem in cloning the external repo. please recheck external repo link"
+        )
+        return await catub.tgbot.send_message(
+            BOTLOG_CHATID,
+            "There was a problem in cloning the external repo. please recheck external repo link",
+        )
+    if os.path.exists(os.path.join(cfolder, "requirements.txt")):
+        rpath = os.path.join(cfolder, "requirements.txt")
+        await runcmd(f"pip3 install --no-cache-dir {rpath}")
+    await load_plugins(folder="userbot", extfolder=cfolder)
