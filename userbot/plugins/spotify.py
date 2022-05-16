@@ -35,6 +35,7 @@ from validators.url import url
 
 from userbot.core.logger import logging
 
+from ..sql_helper.globals import gvarstatus
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions.functions import (
     delete_conv,
@@ -47,8 +48,8 @@ from ..helpers.tools import post_to_telegraph
 from ..sql_helper import global_collectionjson as glob_db
 from . import BOTLOG, BOTLOG_CHATID, Config, catub, reply_id
 
-SPOTIFY_CLIENT_ID = Config.SPOTIFY_CLIENT_ID
-SPOTIFY_CLIENT_SECRET = Config.SPOTIFY_CLIENT_SECRET
+SPOTIFY_CLIENT_ID = gvarstatus("S_ID")
+SPOTIFY_CLIENT_SECRET = gvarstatus("S_S")
 
 
 LOGS = logging.getLogger(__name__)
