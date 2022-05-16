@@ -22,6 +22,7 @@ from ..sql_helper.globals import gvarstatus
 bot = catub
 LOGS = logging.getLogger(__name__)
 USERID = catub.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
+OWNER_ID = USERID
 ALIVE_NAME = Config.ALIVE_NAME
 
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
