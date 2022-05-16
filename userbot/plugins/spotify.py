@@ -81,9 +81,6 @@ OFFSET = 1
 # reduce the OFFSET from our actual 70 character limit
 LIMIT = 70 - OFFSET
 # [----------------------------------------------------------------------]
-# Errors
-no_sp_vars = "Vars `SPOTIFY_CLIENT_ID` & `SPOTIFY_CLIENT_SECRET` are missing, add them first !\n\n[Follow this tutorial](https://telegra.ph/Steps-of-setting-Spotify-Vars-in-Catuserbot-04-24-2)"
-
 
 class Database:
     def __init__(self):
@@ -172,8 +169,6 @@ async def spotify_setup(event):
             "For authencation you need to set `PRIVATE_GROUP_BOT_API_ID` in heroku",
             7,
         )
-    if not (SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET):
-        return await edit_delete(event, no_sp_vars, 10)
     if event.chat_id != BOTLOG_CHATID:
         return await edit_delete(
             event, "CHAT INVALID :: Do this in your Log Channel", 7
@@ -496,14 +491,6 @@ if SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET:
 
 
 async def sp_var_check(event):
-    if not (SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET):
-        await event.edit(no_sp_vars)
-        return False
-    if (SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET) and SP_DATABASE is None:
-        await event.edit(
-            "ERROR :: No Database was found!\n**Do `.help spsetup` for more info.**\n\n[Follow this tutorial](https://telegra.ph/Steps-of-setting-Spotify-Vars-in-Catuserbot-04-24-2)"
-        )
-        return False
     return True
 
 
