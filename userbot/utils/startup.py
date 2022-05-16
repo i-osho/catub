@@ -21,7 +21,8 @@ from .pluginmanager import load_module
 from .tools import create_supergroup
 
 STARTUP_PIC = (
-    os.environ.get("STARTUP_PIC") or "https://telegra.ph/file/4e3ba8e8f7e535d5a2abe.jpg"
+    os.environ.get(
+        "STARTUP_PIC") or "https://telegra.ph/file/4e3ba8e8f7e535d5a2abe.jpg"
 )
 LOGS = logging.getLogger("CatUserbot")
 cmdhr = Config.COMMAND_HAND_LER
@@ -79,7 +80,6 @@ async def startupmessage():
         return None
     try:
         if msg_details:
-            await catub.check_testcases()
             message = await catub.get_messages(msg_details[0], ids=msg_details[1])
             text = message.text + "\n\n**Ok Bot is Back and Alive.**"
             await catub.edit_message(msg_details[0], msg_details[1], text)
@@ -208,9 +208,11 @@ async def verifyLoggerGroup():
                         "Permissions missing to addusers for the specified PM_LOGGER_GROUP_ID."
                     )
         except ValueError:
-            LOGS.error("PM_LOGGER_GROUP_ID cannot be found. Make sure it's correct.")
+            LOGS.error(
+                "PM_LOGGER_GROUP_ID cannot be found. Make sure it's correct.")
         except TypeError:
-            LOGS.error("PM_LOGGER_GROUP_ID is unsupported. Make sure it's correct.")
+            LOGS.error(
+                "PM_LOGGER_GROUP_ID is unsupported. Make sure it's correct.")
         except Exception as e:
             LOGS.error(
                 "An Exception occured upon trying to verify the PM_LOGGER_GROUP_ID.\n"

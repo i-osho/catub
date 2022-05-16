@@ -47,7 +47,7 @@ async def _(event):
     }
     data = open(required_file_name, "rb").read()
     response = requests.post(
-        Config.IBM_WATSON_CRED_URL + "/v1/recognize",
+        f"{Config.IBM_WATSON_CRED_URL}/v1/recognize",
         headers=headers,
         data=data,
         auth=("apikey", Config.IBM_WATSON_CRED_PASSWORD),
@@ -65,7 +65,7 @@ async def _(event):
         transcript_confidence += " " + str(alternatives["confidence"])
     end = datetime.now()
     ms = (end - start).seconds
-    if transcript_response == "":
+    if not transcript_response:
         string_to_show = "**Language : **`{}`\n**Time Taken : **`{} seconds`\n**No Results Found**".format(
             lan, ms
         )

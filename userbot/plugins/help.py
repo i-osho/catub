@@ -8,6 +8,7 @@ from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.utils import reply_id
 
 cmdprefix = Config.COMMAND_HAND_LER
+BADCAT = Config.BADCAT
 
 plugin_category = "tools"
 
@@ -65,7 +66,7 @@ async def cmdinfo(input_str, event, plugin=False):
         category = getkey(plugin)
         if category is not None:
             outstr += f"**Category :** `{category}`\n\n"
-    outstr += f"**✘ Intro :**\n{about[0]}"
+    outstr += f"**✘  Intro :**\n{about[0]}"
     return outstr
 
 
@@ -87,11 +88,11 @@ async def plugininfo(input_str, event, flag):
     if category is not None:
         outstr += f"**Category :** `{category}`\n\n"
     for cmd in sorted(cmds):
-        outstr += f"**✘ Cmd :** `{cmdprefix}{cmd}`\n"
+        outstr += f"•  **cmd :** `{cmdprefix}{cmd}`\n"
         try:
-            outstr += f"**➥ Info :** __{CMD_INFO[cmd][1]}__\n\n"
+            outstr += f"•  **info :** `{CMD_INFO[cmd][1]}`\n\n"
         except IndexError:
-            outstr += "**➥ Info :** `None`\n\n"
+            outstr += "•  **info :** `None`\n\n"
     outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help <command name>`\
         \n**Note : **If command name is same as plugin name then use this `{cmdprefix}help -c <command name>`."
     return outstr
@@ -182,20 +183,19 @@ async def _(event):
 )
 async def _(event):
     "To get list of commands."
-    input_str = event.pattern_match.group(1)
-    if not input_str:
-        outstr = await cmdlist()
-    else:
+    if input_str := event.pattern_match.group(1):
         try:
             cmds = PLG_INFO[input_str]
         except KeyError:
             return await edit_delete(event, "__Invalid plugin name recheck it.__")
         except Exception as e:
             return await edit_delete(event, f"**Error**\n`{e}`")
-        outstr = f"**✘ {input_str.title()} has {len(cmds)} commands**\n"
+        outstr = f"• **{input_str.title()} has {len(cmds)} commands**\n"
         for cmd in cmds:
             outstr += f"  - `{cmdprefix}{cmd}`\n"
         outstr += f"**👩‍💻 Usage : ** `{cmdprefix}help -c <command name>`"
+    else:
+        outstr = await cmdlist()
     await edit_or_reply(
         event, outstr, aslink=True, linktext="Total Commands of Catuserbot are :"
     )
@@ -212,8 +212,7 @@ async def _(event):
 async def _(event):
     "To search commands."
     cmd = event.pattern_match.group(1)
-    found = [i for i in sorted(list(CMD_INFO)) if cmd in i]
-    if found:
+    if found := [i for i in sorted(list(CMD_INFO)) if cmd in i]:
         out_str = "".join(f"`{i}`    " for i in found)
         out = f"**I found {len(found)} command(s) for: **`{cmd}`\n\n{out_str}"
         out += f"\n\n__For more info check {cmdprefix}help -c <command>__"

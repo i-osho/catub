@@ -10,17 +10,15 @@ from pathlib import Path
 from ShazamAPI import Shazam
 from telethon import types
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from telethon.tl.functions.contacts import UnblockRequest as unblock
 from validators.url import url
-
-from userbot import catub
 
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import name_dl, song_dl, video_dl, yt_data, yt_search
+from ..helpers.functions import delete_conv, name_dl, song_dl, video_dl, yt_search
 from ..helpers.tools import media_type
 from ..helpers.utils import _catutils, reply_id
-from . import hmention
+from . import catub
 
 plugin_category = "utils"
 LOGS = logging.getLogger(__name__)
@@ -31,7 +29,6 @@ LOGS = logging.getLogger(__name__)
 SONG_SEARCH_STRING = "<code>wi8..! I am finding your song....</code>"
 SONG_NOT_FOUND = "<code>Sorry !I am unable to find any song like that</code>"
 SONG_SENDING_STRING = "<code>yeah..! i found something wi8..🥰...</code>"
-SONGBOT_BLOCKED_STRING = "<code>Please unblock @songdl_bot and try again</code>"
 # =========================================================== #
 #                                                             #
 # =========================================================== #
@@ -70,24 +67,19 @@ async def _(event):
     cmd = event.pattern_match.group(1)
     q = "320k" if cmd == "320" else "128k"
     song_cmd = song_dl.format(QUALITY=q, video_link=video_link)
-    # thumb_cmd = thumb_dl.format(video_link=video_link)
     name_cmd = name_dl.format(video_link=video_link)
+
     try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
+        stderr = (await _catutils.runcmd(song_cmd))[1]
+        # if stderr:
+        # await catevent.edit(f"**Error1 :** `{stderr}`")
+        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+        if stderr:
+            return await catevent.edit(f"**Error :** `{stderr}`")
+        catname = os.path.splitext(catname)[0]
+        song_file = Path(f"{catname}.mp3")
+    except:
         pass
-    stderr = (await _catutils.runcmd(song_cmd))[1]
-    if stderr:
-        return await catevent.edit(f"**Error :** `{stderr}`")
-    catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
-    if stderr:
-        return await catevent.edit(f"**Error :** `{stderr}`")
-    # stderr = (await runcmd(thumb_cmd))[1]
-    catname = os.path.splitext(catname)[0]
-    # if stderr:
-    #    return await catevent.edit(f"**Error :** `{stderr}`")
-    song_file = Path(f"{catname}.mp3")
     if not os.path.exists(song_file):
         return await catevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
@@ -98,13 +90,12 @@ async def _(event):
         catthumb = Path(f"{catname}.webp")
     elif not os.path.exists(catthumb):
         catthumb = None
-    ytdata = await yt_data(video_link)
+    title = catname.replace("./temp/", "").replace("_", "|")
     await event.client.send_file(
         event.chat_id,
         song_file,
         force_document=False,
-        caption=f"<b><i>➥ Title :- {ytdata['title']}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
-        parse_mode="html",
+        caption=f"**Title:** `{title}`",
         thumb=catthumb,
         supports_streaming=True,
         reply_to=reply_to_id,
@@ -113,15 +104,6 @@ async def _(event):
     for files in (catthumb, song_file):
         if files and os.path.exists(files):
             os.remove(files)
-
-
-async def delete_messages(event, chat, from_message):
-    itermsg = event.client.iter_messages(chat, min_id=from_message.id)
-    msgs = [from_message.id]
-    async for i in itermsg:
-        msgs.append(i.id)
-    await event.client.delete_messages(chat, msgs)
-    await event.client.send_read_acknowledge(chat)
 
 
 @catub.cat_cmd(
@@ -151,25 +133,20 @@ async def _(event):
         return await catevent.edit(
             f"Sorry!. I can't find any related video/audio for `{query}`"
         )
-    # thumb_cmd = thumb_dl.format(video_link=video_link)
+
     name_cmd = name_dl.format(video_link=video_link)
     video_cmd = video_dl.format(video_link=video_link)
-    stderr = (await _catutils.runcmd(video_cmd))[1]
-    if stderr:
-        return await catevent.edit(f"**Error :** `{stderr}`")
-    catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
-    if stderr:
-        return await catevent.edit(f"**Error :** `{stderr}`")
-    # stderr = (await runcmd(thumb_cmd))[1]
     try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
+        stderr = (await _catutils.runcmd(video_cmd))[1]
+        # if stderr:
+        # return await catevent.edit(f"**Error :** `{stderr}`")
+        catname, stderr = (await _catutils.runcmd(name_cmd))[:2]
+        if stderr:
+            return await catevent.edit(f"**Error :** `{stderr}`")
+        catname = os.path.splitext(catname)[0]
+        vsong_file = Path(f"{catname}.mp4")
+    except:
         pass
-    # if stderr:
-    #    return await catevent.edit(f"**Error :** `{stderr}`")
-    catname = os.path.splitext(catname)[0]
-    vsong_file = Path(f"{catname}.mp4")
     if not os.path.exists(vsong_file):
         vsong_file = Path(f"{catname}.mkv")
     elif not os.path.exists(vsong_file):
@@ -182,13 +159,11 @@ async def _(event):
         catthumb = Path(f"{catname}.webp")
     elif not os.path.exists(catthumb):
         catthumb = None
-    ytdata = await yt_data(video_link)
+    title = catname.replace("./temp/", "").replace("_", "|")
     await event.client.send_file(
         event.chat_id,
         vsong_file,
-        force_document=False,
-        caption=f"<b><i>➥ Title :- {ytdata['title']}</i></b>\n<b><i>➥ Uploaded by :- {hmention}</i></b>",
-        parse_mode="html",
+        caption=f"**Title:** `{title}`",
         thumb=catthumb,
         supports_streaming=True,
         reply_to=reply_to_id,
@@ -200,12 +175,15 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="shazam$",
+    pattern="s(a)?z(a)?m$",
     command=("shazam", plugin_category),
     info={
         "header": "To reverse search song.",
         "description": "Reverse search audio file using shazam api",
-        "usage": "{tr}shazam <reply to voice/audio>",
+        "usage": [
+            "{tr}shazam <reply to voice/audio>",
+            "{tr}szm <reply to voice/audio>",
+        ],
     },
 )
 async def shazamcmd(event):
@@ -264,72 +242,38 @@ async def _(event):
     async with event.client.conversation(chat) as conv:
         try:
             purgeflag = await conv.send_message("/start")
-            await conv.get_response()
-            await conv.send_message(song)
-            hmm = await conv.get_response()
-            while hmm.edit_hide is not True:
-                await asyncio.sleep(0.1)
-                hmm = await event.client.get_messages(chat, ids=hmm.id)
-            baka = await event.client.get_messages(chat)
-            if baka[0].message.startswith(
-                ("I don't like to say this but I failed to find any such song.")
-            ):
-                await delete_messages(event, chat, purgeflag)
-                return await edit_delete(
-                    catevent, SONG_NOT_FOUND, parse_mode="html", time=5
-                )
-            await catevent.edit(SONG_SENDING_STRING, parse_mode="html")
-            await baka[0].click(0)
-            await conv.get_response()
-            await conv.get_response()
-            music = await conv.get_response()
-            await event.client.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            return await catevent.edit(SONGBOT_BLOCKED_STRING, parse_mode="html")
+            await edit_or_reply(
+                catevent, "**Error:** Trying to unblock & retry, wait a sec..."
+            )
+            await catub(unblock("songdl_bot"))
+            purgeflag = await conv.send_message("/start")
+        await conv.get_response()
+        await conv.send_message(song)
+        hmm = await conv.get_response()
+        while hmm.edit_hide is not True:
+            await asyncio.sleep(0.1)
+            hmm = await event.client.get_messages(chat, ids=hmm.id)
+        baka = await event.client.get_messages(chat)
+        if baka[0].message.startswith(
+            ("I don't like to say this but I failed to find any such song.")
+        ):
+            await delete_conv(event, chat, purgeflag)
+            return await edit_delete(
+                catevent, SONG_NOT_FOUND, parse_mode="html", time=5
+            )
+        await catevent.edit(SONG_SENDING_STRING, parse_mode="html")
+        await baka[0].click(0)
+        await conv.get_response()
+        await conv.get_response()
+        music = await conv.get_response()
+        await event.client.send_read_acknowledge(conv.chat_id)
         await event.client.send_file(
             event.chat_id,
             music,
-            caption=f"<b>➥ Song :- <code>{song}</code></b>",
+            caption=f"<b>Title :- <code>{song}</code></b>",
             parse_mode="html",
             reply_to=reply_id_,
         )
         await catevent.delete()
-        await delete_messages(event, chat, purgeflag)
-
-
-# reverse search by  @Lal_bakthan
-@catub.cat_cmd(
-    pattern="szm$",
-    command=("szm", plugin_category),
-    info={
-        "header": "To reverse search music file.",
-        "description": "music file lenght must be around 10 sec so use ffmpeg plugin to trim it.",
-        "usage": "{tr}szm",
-    },
-)
-async def _(event):
-    "To reverse search music by bot."
-    if not event.reply_to_msg_id:
-        return await edit_delete(event, "```Reply to an audio message.```")
-    reply_message = await event.get_reply_message()
-    chat = "@auddbot"
-    catevent = await edit_or_reply(event, "```Identifying the song```")
-    async with event.client.conversation(chat) as conv:
-        try:
-            await conv.send_message("/start")
-            await conv.get_response()
-            await conv.send_message(reply_message)
-            check = await conv.get_response()
-            if not check.text.startswith("Audio received"):
-                return await catevent.edit(
-                    "An error while identifying the song. Try to use a 5-10s long audio message."
-                )
-            await catevent.edit("Wait just a sec...")
-            result = await conv.get_response()
-            await event.client.send_read_acknowledge(conv.chat_id)
-        except YouBlockedUserError:
-            await catevent.edit("```Please unblock (@auddbot) and try again```")
-            return
-    namem = f"**Song Name : **`{result.text.splitlines()[0]}`\
-        \n\n**Details : **__{result.text.splitlines()[2]}__"
-    await catevent.edit(namem)
+        await delete_conv(event, chat, purgeflag)

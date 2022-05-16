@@ -65,7 +65,7 @@ async def labstack(event):
     command_to_exec = [
         "curl",
         "-F",
-        "files=@" + filebase,
+        f"files=@{filebase}",
         "-H",
         "Transfer-Encoding: chunked",
         "-H",
@@ -148,8 +148,7 @@ async def _(event):
     )
     stdout, stderr = await process.communicate()
     error = stderr.decode().strip()
-    t_response = stdout.decode().strip()
-    if t_response:
+    if t_response := stdout.decode().strip():
         try:
             t_response = json.dumps(json.loads(t_response), sort_keys=True, indent=4)
         except Exception as e:

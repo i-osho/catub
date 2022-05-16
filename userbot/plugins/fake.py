@@ -28,7 +28,6 @@ plugin_category = "fun"
         "examples": "{tr}scam photo 300",
         "actions": [
             "typing",
-            "sticker",
             "contact",
             "game",
             "location",
@@ -43,7 +42,6 @@ plugin_category = "fun"
 async def _(event):
     options = [
         "typing",
-        "sticker",
         "contact",
         "game",
         "location",

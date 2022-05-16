@@ -9,7 +9,7 @@ class Development(Config):
     ALIVE_NAME = "Your value"
     # create any PostgreSQL database (i recommend to use elephantsql) and paste that link here
     DB_URI = "Your value"
-    # After cloning the repo and installing requirements do python3 telesetup.py an fill that value with this
+    # After cloning the repo and installing requirements do python3 stringsetup.py an fill that value with this
     STRING_SESSION = "Your value"
     # create a new bot in @botfather and fill the following vales with bottoken
     TG_BOT_TOKEN = "Your value"
@@ -19,3 +19,7 @@ class Development(Config):
     COMMAND_HAND_LER = "."
     # command hanler for sudo
     SUDO_COMMAND_HAND_LER = "."
+    # External plugins repo
+    EXTERNAL_REPO = "https://github.com/TgCatUB/CatPlugins"
+    # if you need badcat plugins set "True"
+    BADCAT = "False"

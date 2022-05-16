@@ -3,7 +3,6 @@ import base64
 from telethon import events, functions, types
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import ChatBannedRights
 from telethon.utils import get_display_name
 
@@ -172,11 +171,7 @@ async def _(event):  # sourcery no-metrics
 
         else:
             return await edit_or_reply(event, "`I can't lock nothing !!`")
-        try:
-            cat = Get(cat)
-            await event.client(cat)
-        except BaseException:
-            pass
+
         lock_rights = ChatBannedRights(
             until_date=None,
             send_messages=msg,
@@ -360,11 +355,7 @@ async def _(event):  # sourcery no-metrics
 
         else:
             return await edit_or_reply(event, "`I can't unlock nothing !!`")
-        try:
-            cat = Get(cat)
-            await event.client(cat)
-        except BaseException:
-            pass
+
         unlock_rights = ChatBannedRights(
             until_date=None,
             send_messages=msg,
@@ -668,11 +659,7 @@ async def _(event):  # sourcery no-metrics
 
     else:
         return await edit_or_reply(event, "`I can't lock nothing !!`")
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
+
     lock_rights = ChatBannedRights(
         until_date=None,
         send_messages=umsg,
@@ -917,11 +904,7 @@ async def _(event):  # sourcery no-metrics
 
     else:
         return await edit_or_reply(event, "`I can't lock nothing !!`")
-    try:
-        cat = Get(cat)
-        await event.client(cat)
-    except BaseException:
-        pass
+
     lock_rights = ChatBannedRights(
         until_date=None,
         send_messages=umsg,

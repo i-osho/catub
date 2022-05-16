@@ -1,7 +1,7 @@
 import base64
 from asyncio import sleep
 
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
+from telethon.utils import get_display_name
 
 from .. import catub
 from ..core.logger import logging
@@ -95,7 +95,7 @@ async def catbroadcast_add(event):
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {chat.title} is added to category {keyword}",
+                f"The Chat {get_display_name(await event.get_chat())} is added to category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
@@ -206,7 +206,6 @@ async def catbroadcast_send(event):
         )
     keyword = catinput_str.lower()
     no_of_chats = sql.num_broadcastlist_chat(keyword)
-    group_ = Get(cat)
     if no_of_chats == 0:
         return await edit_delete(
             event,
@@ -271,7 +270,6 @@ async def catbroadcast_send(event):
         )
     keyword = catinput_str.lower()
     no_of_chats = sql.num_broadcastlist_chat(keyword)
-    group_ = Get(cat)
     if no_of_chats == 0:
         return await edit_delete(
             event,
@@ -345,7 +343,7 @@ async def catbroadcast_remove(event):
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {chat.title} is removed from category {keyword}",
+                f"The Chat {get_display_name(await event.get_chat())} is removed from category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:
@@ -414,7 +412,7 @@ async def catbroadcast_remove(event):
         try:
             await event.client.send_message(
                 BOTLOG_CHATID,
-                f"The Chat {chat.title} is removed from category {keyword}",
+                f"The Chat {get_display_name(await event.get_chat())} is removed from category {keyword}",
                 parse_mode=_format.parse_pre,
             )
         except Exception:

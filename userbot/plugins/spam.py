@@ -3,7 +3,6 @@ import base64
 
 from telethon.tl import functions, types
 from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 from telethon.utils import get_display_name
 
 from userbot import catub
@@ -115,8 +114,9 @@ async def spam_function(event, sandy, cat, sleeptimem, sleeptimet, DelaySpam=Fal
     pattern="spam ([\s\S]*)",
     command=("spam", plugin_category),
     info={
-        "header": "Floods the text in the chat !! with given number of times,",
-        "description": "Sends the replied media/message <count> times !! in the chat",
+        "header": "Floods the text in the chat !! with given number of times.",
+        "description": "Sends the replied media/message <count> times !! in the chat.",
+        "note": "To stop the spam after starting it use '{tr}end spam' cmd.",
         "usage": ["{tr}spam <count> <text>", "{tr}spam <count> reply to message"],
         "examples": "{tr}spam 10 hi",
     },
@@ -173,7 +173,8 @@ async def stickerpack_spam(event):
                 types.InputStickerSetID(
                     id=stickerset_attr.stickerset.id,
                     access_hash=stickerset_attr.stickerset.access_hash,
-                )
+                ),
+                hash=0,
             )
         )
     except Exception:
@@ -181,16 +182,13 @@ async def stickerpack_spam(event):
             catevent,
             "`I guess this sticker is not part of any pack so i cant kang this sticker pack try kang for this sticker`",
         )
-    try:
-        hmm = Get(hmm)
-        await event.client(hmm)
-    except BaseException:
-        pass
+
     reqd_sticker_set = await event.client(
         functions.messages.GetStickerSetRequest(
             stickerset=types.InputStickerSetShortName(
                 short_name=f"{get_stickerset.set.short_name}"
-            )
+            ),
+            hash=0,
         )
     )
     addgvar("spamwork", True)
@@ -199,6 +197,7 @@ async def stickerpack_spam(event):
             return
         await event.client.send_file(event.chat_id, m)
         await asyncio.sleep(0.7)
+    await catevent.delete()
     if BOTLOG:
         if event.is_private:
             await event.client.send_message(

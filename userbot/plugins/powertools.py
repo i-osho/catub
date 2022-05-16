@@ -17,7 +17,6 @@ from . import BOTLOG, BOTLOG_CHATID, HEROKU_APP
 LOGS = logging.getLogger(__name__)
 plugin_category = "tools"
 
-# """
 @catub.cat_cmd(
     pattern="restart$",
     command=("restart", plugin_category),
@@ -54,9 +53,6 @@ async def _(event):
         LOGS.error(e)
 
 
-# """
-
-
 @catub.cat_cmd(
     pattern="shutdown$",
     command=("shutdown", plugin_category),
@@ -78,27 +74,27 @@ async def _(event):
 
 
 @catub.cat_cmd(
-    pattern="coma( [0-9]+)?$",
-    command=("coma", plugin_category),
+    pattern="sleep( [0-9]+)?$",
+    command=("sleep", plugin_category),
     info={
         "header": "Userbot will stop working for the mentioned time.",
-        "usage": "{tr}coma <seconds>",
-        "examples": "{tr}coma 60",
+        "usage": "{tr}sleep <seconds>",
+        "examples": "{tr}sleep 60",
     },
 )
 async def _(event):
-    "To send the userbot to coma"
+    "To sleep the userbot"
     if " " not in event.pattern_match.group(1):
-        return await edit_or_reply(event, "Syntax: `.coma time`")
+        return await edit_or_reply(event, "Syntax: `.sleep time`")
     counter = int(event.pattern_match.group(1))
     if BOTLOG:
         await event.client.send_message(
-            BOTLOG_CHATID,
-            "You put the bot to coma for " + str(counter) + " seconds",
+            BOTLOG_CHATID, f"You put the bot to sleep for {counter} seconds"
         )
-    event = await edit_or_reply(event, f"`ok, going to coma for {counter} seconds`")
+
+    event = await edit_or_reply(event, f"`ok, let me sleep for {counter} seconds`")
     sleep(counter)
-    await event.edit("`OK, I'm alive now.`")
+    await event.edit("`OK, I'm awake now.`")
 
 
 @catub.cat_cmd(
@@ -117,10 +113,10 @@ async def set_pmlog(event):
     input_str = event.pattern_match.group(1)
     if input_str == "off":
         if gvarstatus("restartupdate") is None:
-            return await edit_delete(event, "__Notify was already disabled__")
+            return await edit_delete(event, "__Notify already disabled__")
         delgvar("restartupdate")
-        return await edit_or_reply(event, "__Notify was disabled successfully.__")
+        return await edit_or_reply(event, "__Notify is disable successfully.__")
     if gvarstatus("restartupdate") is None:
         addgvar("restartupdate", "turn-oned")
-        return await edit_or_reply(event, "__Notify was enabled successfully.__")
-    await edit_delete(event, "__Notify was already enabled.__")
+        return await edit_or_reply(event, "__Notify is enable successfully.__")
+    await edit_delete(event, "__Notify already enabled.__")

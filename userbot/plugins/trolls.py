@@ -1,4 +1,4 @@
-# credits to @assconfused and @Mrsasshole
+# credits to @assonfused and @pussy1709
 #    Copyright (C) 2020  sandeep.n(π.$)
 
 import os

@@ -33,15 +33,19 @@ async def bot_help(event):
     await event.reply(
         f"""The commands in the bot are:
 **Note : **__This commands work only in this bot__ {botusername}
+
 • **Cmd : **/uinfo <reply to user message>
 • **Info : **__You have noticed that forwarded stickers/emoji doesn't have forward tag so you can identify the user who sent thoose messages by this cmd.__
 • **Note : **__It works for all forwarded messages. even for users who's permission forward message nobody.__
+
 • **Cmd : **/ban <reason> or /ban <username/userid> <reason>
 • **Info : **__Reply to a user message with reason so he will be notified as you banned from the bot and his messages will not be forworded to you further.__
 • **Note : **__Reason is must. without reason it won't work. __
+
 • **Cmd : **/unban <reason(optional)> or /unban <username/userid>
 • **Info : **__Reply to user message or provide username/userid to unban from the bot.__
 • **Note : **__To check banned users list use__ `{cmhd}bblist`.
+
 • **Cmd : **/broadcast
 • **Info : **__Reply to a message to get broadcasted to every user who started your bot. To get list of users use__ `{cmhd}bot_users`.
 • **Note : **__if user stoped/blocked the bot then he will be removed from your database that is he will erased from the bot_starters list.__
@@ -100,7 +104,7 @@ async def bot_broadcast(event):
                     await asyncio.sleep(e.seconds)
     end_ = datetime.now()
     b_info = f"🔊  Successfully broadcasted message to ➜  <b>{count} users.</b>"
-    if len(blocked_users) != 0:
+    if blocked_users:
         b_info += f"\n🚫  <b>{len(blocked_users)} users</b> blocked your bot recently, so have been removed."
     b_info += (
         f"\n⏳  <code>Process took: {time_formatter((end_ - start_).seconds)}</code>."
@@ -147,8 +151,7 @@ async def ban_botpms(event):
         return await event.reply(f"**Error:**\n`{e}`")
     if user_id == Config.OWNER_ID:
         return await event.reply("I can't ban you master")
-    check = check_is_black_list(user.id)
-    if check:
+    if check := check_is_black_list(user.id):
         return await event.client.send_message(
             event.chat_id,
             f"#Already_banned\

@@ -1,4 +1,4 @@
-# Made by @assconfused and @Mrsasshole
+# Made by @assonfused and @pussy1709
 # memify plugin for catuserbot
 import asyncio
 import base64
@@ -8,7 +8,6 @@ import random
 import string
 
 from PIL import Image, ImageFilter
-from telethon.tl.functions.messages import ImportChatInviteRequest as Get
 
 from userbot import catub
 
@@ -34,8 +33,8 @@ plugin_category = "fun"
 def random_color():
     number_of_colors = 2
     return [
-        "#" + "".join(random.choice("0123456789ABCDEF") for j in range(6))
-        for i in range(number_of_colors)
+        "#" + "".join(random.choice("0123456789ABCDEF") for _ in range(6))
+        for _ in range(number_of_colors)
     ]
 
 
@@ -173,11 +172,7 @@ async def memes(event):
         return await edit_delete(
             output[0], "__Unable to extract image from the replied message.__"
         )
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+
     meme_file = convert_toimage(output[1])
     meme = os.path.join("./temp", "catmeme.jpg")
     if gvarstatus("CNG_FONTS") is None:
@@ -246,7 +241,7 @@ async def memes(event):
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    Jimsanidea = None
+    jisanidea = None
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
@@ -254,15 +249,11 @@ async def memes(event):
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
-        Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+        jisanidea = True
+
     outputfile = (
         os.path.join("./temp", "ascii_file.webp")
-        if Jimsanidea
+        if jisanidea
         else os.path.join("./temp", "ascii_file.jpg")
     )
     c_list = random_color()
@@ -296,7 +287,7 @@ async def memes(event):
     catid = await reply_id(event)
     if not os.path.isdir("./temp/"):
         os.mkdir("./temp/")
-    Jimsanidea = None
+    jisanidea = None
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
@@ -304,15 +295,11 @@ async def memes(event):
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
-        Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+        jisanidea = True
+
     outputfile = (
         os.path.join("./temp", "invert.webp")
-        if Jimsanidea
+        if jisanidea
         else os.path.join("./temp", "invert.jpg")
     )
     await invert_colors(meme_file, outputfile)
@@ -342,7 +329,7 @@ async def memes(event):
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    Jimsanidea = None
+    jisanidea = None
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
@@ -350,15 +337,11 @@ async def memes(event):
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
-        Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+        jisanidea = True
+
     outputfile = (
         os.path.join("./temp", "solarize.webp")
-        if Jimsanidea
+        if jisanidea
         else os.path.join("./temp", "solarize.jpg")
     )
     await solarize(meme_file, outputfile)
@@ -388,7 +371,7 @@ async def memes(event):
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    Jimsanidea = None
+    jisanidea = None
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
@@ -396,15 +379,11 @@ async def memes(event):
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
-        Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+        jisanidea = True
+
     outputfile = (
         os.path.join("./temp", "mirror_file.webp")
-        if Jimsanidea
+        if jisanidea
         else os.path.join("./temp", "mirror_file.jpg")
     )
     await mirror_file(meme_file, outputfile)
@@ -434,7 +413,7 @@ async def memes(event):
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    Jimsanidea = None
+    jisanidea = None
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
@@ -442,15 +421,11 @@ async def memes(event):
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
-        Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+        jisanidea = True
+
     outputfile = (
         os.path.join("./temp", "flip_image.webp")
-        if Jimsanidea
+        if jisanidea
         else os.path.join("./temp", "flip_image.jpg")
     )
     await flip_image(meme_file, outputfile)
@@ -480,7 +455,7 @@ async def memes(event):
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    Jimsanidea = None
+    jisanidea = None
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
@@ -488,15 +463,11 @@ async def memes(event):
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
-        Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+        jisanidea = True
+
     outputfile = (
         os.path.join("./temp", "grayscale.webp")
-        if Jimsanidea
+        if jisanidea
         else os.path.join("./temp", "grayscale.jpg")
     )
     await grayscale(meme_file, outputfile)
@@ -528,7 +499,7 @@ async def memes(event):
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    Jimsanidea = None
+    jisanidea = None
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
@@ -536,15 +507,11 @@ async def memes(event):
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
-        Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+        jisanidea = True
+
     outputfile = (
         os.path.join("./temp", "zoomimage.webp")
-        if Jimsanidea
+        if jisanidea
         else os.path.join("./temp", "zoomimage.jpg")
     )
     try:
@@ -593,7 +560,7 @@ async def memes(event):
     catid = await reply_id(event)
     if not os.path.isdir("./temp"):
         os.mkdir("./temp")
-    Jimsanidea = None
+    jisanidea = None
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
@@ -601,15 +568,11 @@ async def memes(event):
         )
     meme_file = convert_toimage(output[1])
     if output[2] in ["Round Video", "Gif", "Sticker", "Video"]:
-        Jimsanidea = True
-    try:
-        san = Get(san)
-        await event.client(san)
-    except BaseException:
-        pass
+        jisanidea = True
+
     outputfile = (
         os.path.join("./temp", "framed.webp")
-        if Jimsanidea
+        if jisanidea
         else os.path.join("./temp", "framed.jpg")
     )
     try:

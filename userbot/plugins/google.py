@@ -11,13 +11,12 @@ from PIL import Image
 from search_engine_parser import BingSearch, GoogleSearch, YahooSearch
 from search_engine_parser.core.exceptions import NoResultsOrTrafficError
 
-from userbot import catub
+from userbot import BOTLOG, BOTLOG_CHATID, catub
 
 from ..Config import Config
 from ..core.managers import edit_delete, edit_or_reply
 from ..helpers.functions import deEmojify
 from ..helpers.utils import reply_id
-from . import BOTLOG, BOTLOG_CHATID
 
 opener = urllib.request.build_opener()
 useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36"
@@ -90,13 +89,13 @@ async def gsearch(q_event):
     try:
         page = page[0]
         page = page.replace("-p", "")
-        match = match.replace("-p" + page, "")
+        match = match.replace(f"-p{page}", "")
     except IndexError:
         page = 1
     try:
         lim = lim[0]
         lim = lim.replace("-l", "")
-        match = match.replace("-l" + lim, "")
+        match = match.replace(f"-l{lim}", "")
         lim = int(lim)
         if lim <= 0:
             lim = int(5)
@@ -139,7 +138,7 @@ async def gsearch(q_event):
     if BOTLOG:
         await q_event.client.send_message(
             BOTLOG_CHATID,
-            "Google Search query `" + match + "` was executed successfully",
+            f"Google Search query `{match}` was executed successfully",
         )
 
 
@@ -324,7 +323,7 @@ async def google_search(event):
             event,
             "__Plox your search query exceeds 200 characters or you search query is empty.__",
         )
-    query = "#12" + input_str
+    query = f"#12{input_str}"
     results = await event.client.inline_query("@StickerizerBot", query)
     await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     await event.delete()

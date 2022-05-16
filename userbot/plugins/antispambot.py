@@ -1,5 +1,5 @@
 #    Copyright (C) 2020  sandeep.n(π.$)
-# baning spmmers plugin for catuserbot by @Mrsasshole
+# baning spmmers plugin for catuserbot by @pussy1709
 # included both cas(combot antispam service) and spamwatch (need to add more feaututres)
 
 from requests import get
@@ -59,8 +59,7 @@ if Config.ANTISPAMBOT_BAN:
             except Exception as e:
                 LOGS.info(e)
         if spamwatch and not catbanned:
-            ban = spamwatch.get_ban(user.id)
-            if ban:
+            if ban := spamwatch.get_ban(user.id):
                 hmm = await event.reply(
                     f"[{user.first_name}](tg://user?id={user.id}) was banned by spamwatch for the reason `{ban.reason}`"
                 )
@@ -141,10 +140,10 @@ async def caschecker(event):
         text += banned_users
         if not cas_count:
             text = "No CAS Banned users found!"
-    except ChatAdminRequiredError:
+    except ChatAdminRequiredError as carerr:
         await catevent.edit("`CAS check failed: Admin privileges are required`")
         return
-    except BaseException:
+    except BaseException as be:
         await catevent.edit("`CAS check failed`")
         return
     await catevent.edit(text)
@@ -190,10 +189,10 @@ async def caschecker(event):
         text += banned_users
         if not cas_count:
             text = "No spamwatch Banned users found!"
-    except ChatAdminRequiredError:
+    except ChatAdminRequiredError as carerr:
         await catevent.edit("`spamwatch check failed: Admin privileges are required`")
         return
-    except BaseException:
+    except BaseException as be:
         await catevent.edit("`spamwatch check failed`")
         return
     await catevent.edit(text)
