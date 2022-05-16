@@ -10,7 +10,7 @@
 # Github.com/code-rgb [ TG - @DetetedUser420 ]
 #  Ported it to Pyrogram and improved Heroku compatiblilty
 #
-# tg- @Jisan7509  // Github.com/Jisan09
+# tg- @Jimsan7509  // Github.com/Jimsan09
 # Ported back to teletethon.. xD // Added decent thumb & dual mode for now playing song
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 

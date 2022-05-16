@@ -131,7 +131,7 @@ async def fileinfo(file):
 
 
 async def animator(media, mainevent, textevent=None):
-    # //Hope u dunt kang :/ @Jisan7509
+    # //Hope u dunt kang :/ @Jimsan7509
     if not os.path.isdir(Config.TEMP_DIR):
         os.makedirs(Config.TEMP_DIR)
     BadCat = await mainevent.client.download_media(media, Config.TEMP_DIR)

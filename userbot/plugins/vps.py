@@ -1,4 +1,4 @@
-# \\ Created by-@Jisan7509 -- Github.com/Jisan09 //
+# \\ Created by-@Jimsan7509 -- Github.com/Jimsan09 //
 #  \\   https://github.com/TgCatUB/catuserbot   //
 #   \\       Plugin for @catuserbot            //
 #    ```````````````````````````````````````````

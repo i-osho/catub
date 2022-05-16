@@ -1,5 +1,5 @@
 """
-Created by @jisan7509
+Created by @jimsan7509
 plugin for Cat_Userbot
 ☝☝☝
 You remove this, you gay.

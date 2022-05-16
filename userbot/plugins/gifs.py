@@ -1,4 +1,4 @@
-# Created by @Jisan7509
+# Created by @Jimsan7509
 
 import random
 

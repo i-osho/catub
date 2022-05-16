@@ -1,5 +1,5 @@
 """
-Created by @jisan7509
+Created by @jimsan7509
 modified by  @assconfused
 Userbot plugin for CatUserbot
 """

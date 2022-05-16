@@ -437,3 +437,47 @@ async def yt_search(event):
         return await edit_delete(video_q, str(e), time=10, parse_mode=_format.parse_pre)
     reply_text = f"**•  Search Query:**\n`{query}`\n\n**•  Results:**\n{full_response}"
     await edit_or_reply(video_q, reply_text)
+
+
+@catub.cat_cmd(
+    pattern="insta ([\s\S]*)",
+    command=("insta", plugin_category),
+    info={
+        "header": "To download instagram video/photo",
+        "description": "Note downloads only public profile photos/videos.",
+        "examples": [
+            "{tr}insta <link>",
+        ],
+    },
+)
+async def kakashi(event):
+    "For downloading instagram media"
+    chat = "@FullSavebot"
+    link = event.pattern_match.group(1)
+    if "www.instagram.com" not in link:
+        await edit_or_reply(
+            event, "` I need a Instagram link to download it's Video...`(*_*)"
+        )
+    else:
+        catevent = await edit_or_reply(event, "**Downloading.....**")
+    async with event.client.conversation(chat) as conv:
+        try:
+            msg_start = await conv.send_message("/start")
+            response = await conv.get_response()
+            msg = await conv.send_message(link)
+            details = await conv.get_response()
+            video = await conv.get_response()
+            await event.client.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await catevent.edit("`unblock` @FullSavebot `and retry!`")
+            return
+        await catevent.delete()
+        cat = await event.client.send_file(
+            event.chat_id,
+            video,
+            caption=f"• <a href={link}>Post Link</a> •",
+            parse_mode="html",
+        )
+    await event.client.delete_messages(
+        conv.chat_id, [msg_start.id, response.id, msg.id, video.id, details.id]
+    )

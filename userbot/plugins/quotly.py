@@ -161,7 +161,7 @@ async def q_pic(event):  # sourcery no-metrics
             "{tr}fq <user/reply> <text>",
             "{tr}frq <user/reply> <text>",
         ],
-        "examples": ["{tr}fq @jisan7509 hello bad boys and girls"],
+        "examples": ["{tr}fq @jimsan7509 hello bad boys and girls"],
     },
 )
 async def stickerchat(catquotes):

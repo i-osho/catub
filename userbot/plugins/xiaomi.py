@@ -1,5 +1,5 @@
 # created by @eve_enryu
-# edited & fix by @jisan7509
+# edited & fix by @jimsan7509
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError

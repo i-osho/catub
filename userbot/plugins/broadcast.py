@@ -197,7 +197,6 @@ async def catbroadcast_send(event):
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply:
         return await edit_delete(
             event,
@@ -218,10 +217,6 @@ async def catbroadcast_send(event):
         "sending this message to all groups in the category",
         parse_mode=_format.parse_pre,
     )
-    try:
-        await event.client(group_)
-    except BaseException:
-        pass
     i = 0
     for chat in chats:
         try:
@@ -261,7 +256,6 @@ async def catbroadcast_send(event):
             parse_mode=_format.parse_pre,
         )
     reply = await event.get_reply_message()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply:
         return await edit_delete(
             event,
@@ -282,10 +276,6 @@ async def catbroadcast_send(event):
         "sending this message to all groups in the category",
         parse_mode=_format.parse_pre,
     )
-    try:
-        await event.client(group_)
-    except BaseException:
-        pass
     i = 0
     for chat in chats:
         try:

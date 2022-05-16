@@ -520,7 +520,6 @@ async def _(event):  # sourcery no-metrics
         quality = None
         fps = None
     catreply = await event.get_reply_message()
-    cat_event = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if (
         media_type(catreply) != "Sticker"
         or catreply.media.document.mime_type == "image/webp"

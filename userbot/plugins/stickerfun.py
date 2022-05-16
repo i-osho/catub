@@ -3,7 +3,7 @@
 # imported from ppe-remix by @heyworld & @DeletedUser420
 # modified by @assonfused
 # pengin & gandhi Yato
-# modified & improved by @jisan7509
+# modified & improved by @jimsan7509
 # RegEx by https://t.me/c/1220993104/500653 ( @SnapDragon7410 )
 
 # RegEx by https://t.me/c/1220993104/500653 ( @SnapDragon7410 )

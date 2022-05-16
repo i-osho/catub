@@ -1,4 +1,4 @@
-# created by @jisan7509
+# created by @jimsan7509
 # CatUserbot
 
 import os

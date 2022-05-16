@@ -34,7 +34,7 @@ from ..sql_helper.globals import gvarstatus
 
 plugin_category = "fun"
 
-# modified and developed by @assonfused , @jisan7509
+# modified and developed by @assonfused , @jimsan7509
 
 
 combot_stickers_url = "https://combot.org/telegram/stickers?q="
@@ -502,7 +502,6 @@ async def pack_kang(event):  # sourcery no-metrics
     is_video = False
     emoji = None
     reply = await event.get_reply_message()
-    cat = base64.b64decode("QUFBQUFGRV9vWjVYVE5fUnVaaEtOdw==")
     if not reply or media_type(reply) is None or media_type(reply) != "Sticker":
         return await edit_delete(
             event, "`reply to any sticker to send all stickers in that pack`"
@@ -676,7 +675,7 @@ async def pack_kang(event):  # sourcery no-metrics
     },
 )
 async def pussycat(args):
-    "Convert to animated sticker."  # scam :('  Dom't kamg :/@Jisan7509
+    "Convert to animated sticker."  # scam :('  Dom't kamg :/@Jimsan7509
     message = await args.get_reply_message()
     user = await args.client.get_me()
     userid = user.id
